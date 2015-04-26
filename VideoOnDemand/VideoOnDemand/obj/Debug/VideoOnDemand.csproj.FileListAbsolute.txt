@@ -22,3 +22,7 @@ C:\Users\Mehdi\Git\vod-mvc\VideoOnDemand\VideoOnDemand\bin\fr\System.Web.Mvc.res
 C:\Users\Mehdi\Git\vod-mvc\VideoOnDemand\VideoOnDemand\obj\Debug\VideoOnDemand.csprojResolveAssemblyReference.cache
 C:\Users\Mehdi\Git\vod-mvc\VideoOnDemand\VideoOnDemand\obj\Debug\VideoOnDemand.dll
 C:\Users\Mehdi\Git\vod-mvc\VideoOnDemand\VideoOnDemand\obj\Debug\VideoOnDemand.pdb
+C:\Users\Mehdi\Git\vod-mvc\VideoOnDemand\VideoOnDemand\bin\EntityFramework.dll
+C:\Users\Mehdi\Git\vod-mvc\VideoOnDemand\VideoOnDemand\bin\EntityFramework.SqlServer.dll
+C:\Users\Mehdi\Git\vod-mvc\VideoOnDemand\VideoOnDemand\bin\EntityFramework.xml
+C:\Users\Mehdi\Git\vod-mvc\VideoOnDemand\VideoOnDemand\bin\EntityFramework.SqlServer.xml
