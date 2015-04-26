@@ -8,9 +8,10 @@ namespace VideoOnDemand.Models
     public class Film
     {
         public int Id { get; set; }
-        public String Nom { get; set; }
-        public String Realisateur { get; set; }
+        public String Name { get; set; }
+        public Director Director { get; set; }
         public String Theme { get; set; }
+        public String Description { get; set; }
         public DateTime Sortie { get; set; }
 
     }
