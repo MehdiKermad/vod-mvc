@@ -7,8 +7,8 @@ namespace VideoOnDemand.Models
 {
     public class Personn
     {
-        public String Name { get; set; }
         public String FirstName { get; set; }
+        public String LastName { get; set; }
         public DateTime Birth { get; set; }
     }
 }
