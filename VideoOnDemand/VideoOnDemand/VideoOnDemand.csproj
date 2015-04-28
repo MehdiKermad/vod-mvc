@@ -45,6 +45,8 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -96,16 +98,26 @@
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccueilController.cs" />
+    <Compile Include="Controllers\ActorsController.cs" />
+    <Compile Include="Controllers\DirectorsController.cs" />
+    <Compile Include="Controllers\FilmsController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="DAL\VODContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Actors.cs" />
+    <Compile Include="Models\Actor.cs" />
     <Compile Include="Models\Director.cs" />
     <Compile Include="Models\Film.cs" />
     <Compile Include="Models\Personn.cs" />
@@ -122,6 +134,26 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Views\Users\Create.cshtml" />
+    <Content Include="Views\Users\Delete.cshtml" />
+    <Content Include="Views\Users\Details.cshtml" />
+    <Content Include="Views\Users\Edit.cshtml" />
+    <Content Include="Views\Users\Index.cshtml" />
+    <Content Include="Views\Films\Create.cshtml" />
+    <Content Include="Views\Films\Delete.cshtml" />
+    <Content Include="Views\Films\Details.cshtml" />
+    <Content Include="Views\Films\Edit.cshtml" />
+    <Content Include="Views\Films\Index.cshtml" />
+    <Content Include="Views\Actors\Create.cshtml" />
+    <Content Include="Views\Actors\Delete.cshtml" />
+    <Content Include="Views\Actors\Details.cshtml" />
+    <Content Include="Views\Actors\Edit.cshtml" />
+    <Content Include="Views\Actors\Index.cshtml" />
+    <Content Include="Views\Directors\Create.cshtml" />
+    <Content Include="Views\Directors\Delete.cshtml" />
+    <Content Include="Views\Directors\Details.cshtml" />
+    <Content Include="Views\Directors\Edit.cshtml" />
+    <Content Include="Views\Directors\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
