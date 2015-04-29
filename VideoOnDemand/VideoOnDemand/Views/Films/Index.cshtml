@@ -42,9 +42,10 @@
                     <img src="@Url.Content("~/Content/Images/PasDeJacket.jpg")" alt="@films.ElementAt(i).Name" style="width:130px; height:200px;" />
                 }
 
-                <p class="nameFilm">@films.ElementAt(i).Name</p>
-                <p class="sortieFilm">@films.ElementAt(i).Sortie.ToString("dd/MM/yyyy")</p>
             </a>
+            <p class="nameFilm">@films.ElementAt(i).Name</p>
+            <p class="sortieFilm">@films.ElementAt(i).Sortie.ToString("dd/MM/yyyy")</p>
+            
         </div>
     }
 
