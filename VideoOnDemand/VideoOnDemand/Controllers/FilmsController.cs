@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -50,12 +51,24 @@ namespace VideoOnDemand.Controllers
         // plus de détails, voir  http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Theme,Description,Sortie,Ajout")] Film film)
+        public ActionResult Create([Bind(Include = "Id,Name,Theme,Description,Sortie,Ajout")] Film film, HttpPostedFileBase jacket)
         {
             if (ModelState.IsValid)
             {
                 db.Films.Add(film);
                 db.SaveChanges();
+
+                if (Request.Files.Count > 0) //sauvegarde de la jacket si elle a été envoyée
+                {
+                    var jack = Request.Files[0];
+
+                    if (jack != null && jack.ContentLength > 0)
+                    {
+                        var path = Path.Combine(Server.MapPath("~/Content/Images/"), film.Id + ".jpg");
+                        jack.SaveAs(path);
+                    }
+                }
+
                 return RedirectToAction("Index");
             }
 
