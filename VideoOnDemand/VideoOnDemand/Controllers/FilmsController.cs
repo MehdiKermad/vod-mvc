@@ -129,6 +129,13 @@ namespace VideoOnDemand.Controllers
             Film film = db.Films.Find(id);
             db.Films.Remove(film);
             db.SaveChanges();
+
+            var path = Path.Combine(Server.MapPath("~/Content/Images/"), film.Id + ".jpg");
+            if (System.IO.File.Exists(path)) //si une jacket existe on l'efface
+            {
+                System.IO.File.Delete(path);
+            }
+
             return RedirectToAction("Index");
         }
 
