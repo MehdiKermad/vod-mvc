@@ -95,12 +95,24 @@ namespace VideoOnDemand.Controllers
         // plus de détails, voir  http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Theme,Description,Sortie,Ajout")] Film film)
+        public ActionResult Edit([Bind(Include = "Id,Name,Theme,Description,Sortie,Ajout")] Film film, HttpPostedFileBase jacket)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(film).State = EntityState.Modified;
                 db.SaveChanges();
+
+                if (Request.Files.Count > 0) //sauvegarde de la jacket si elle a été envoyée
+                {
+                    var jack = Request.Files[0];
+
+                    if (jack != null && jack.ContentLength > 0)
+                    {
+                        var path = Path.Combine(Server.MapPath("~/Content/Images/"), film.Id + ".jpg");
+                        jack.SaveAs(path);
+                    }
+                }
+
                 return RedirectToAction("Index");
             }
             return View(film);
