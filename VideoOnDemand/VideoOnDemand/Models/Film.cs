@@ -16,6 +16,7 @@ namespace VideoOnDemand.Models
         public String Theme { get; set; }
         public String Description { get; set; }
         public DateTime Sortie { get; set; }
+        public DateTime Ajout { get; set; }
 
     }
 }
