@@ -14,16 +14,19 @@
 <div id="nouveauxFilms" class="col-md-2 well well-sm">
     <h4>Derniers films</h4>
     <table class="table table-striped">
-        @foreach (var item in films)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @item.Ajout.ToString("dd/MM/yyyy")
-                </td>
-            </tr>
+        @for (var i = 0; i < 10; i++) //affichage des 10 derniers films
+        {     
+            if(i<nbFilms) //on affiche le tb complet seulement si il y'a au minimum 10 films
+            {
+                <tr>
+                    <td>
+                        @films.ElementAt(i).Name
+                    </td>
+                    <td>
+                        @films.ElementAt(i).Ajout.ToString("dd/MM/yyyy")
+                    </td>
+                </tr>
+            }
         }
     </table>
 </div>
