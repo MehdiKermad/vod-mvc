@@ -1,0 +1,49 @@
+﻿@model IEnumerable<VideoOnDemand.Models.Film>
+
+@{
+    ViewBag.Title = "Index";
+    
+    var films = Model.ToList();
+    films.Reverse();
+
+    int nbFilms = films.Count();
+}
+
+<h2>Index</h2>
+
+<div id="nouveauxFilms" class="col-md-2 well well-sm">
+    <h4>Derniers films</h4>
+    <table class="table table-striped">
+        @foreach (var item in films)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @item.Ajout.ToString("dd/MM/yyyy")
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+<div id="listeFilms" class="col-md-offset-1 col-md-9 well well-sm text-center">
+    <h4>Liste des films</h4>
+    @for (int i = 0; i < nbFilms; i++)
+    {
+        <div class="col-md-3">
+            @if (File.Exists(Server.MapPath("~/Content/Images/" + films.ElementAt(i).Id + ".jpg")))
+            {
+                <img src="@Url.Content("~/Content/Images/" + films.ElementAt(i).Id + ".jpg")" alt="@films.ElementAt(i).Name" style="width:130px; height:200px;" />
+            }
+            else
+            {
+                <img src="@Url.Content("~/Content/Images/PasDeJacket.jpg")" alt="@films.ElementAt(i).Name" style="width:130px; height:200px;" />
+            }
+            
+            <p class="nameFilm">@films.ElementAt(i).Name</p>
+            <p class="sortieFilm">@films.ElementAt(i).Sortie.ToString("dd/MM/yyyy")</p>
+        </div>
+    }
+
+</div>
