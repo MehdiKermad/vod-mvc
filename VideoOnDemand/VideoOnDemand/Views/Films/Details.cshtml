@@ -11,13 +11,13 @@
     <hr />
     <dl class="dl-horizontal">
 
-        @if (File.Exists(Server.MapPath("~/Content/Images/" + Model.Id + ".jpg"))) //on verifie que la jacket existe
+        @if (File.Exists(Server.MapPath("~/Content/Images/Jackets/" + Model.Id + ".jpg"))) //on verifie que la jacket existe
         {
             <dt>
                 Jacket
             </dt>
             <dd>
-                <img src="@Url.Content("~/Content/Images/" + Model.Id + ".jpg")" style="width:130px; height:200px;" />
+                <img src="@Url.Content("~/Content/Images/Jackets/" + Model.Id + ".jpg")" style="width:130px; height:200px;" />
             </dd>
         }
         

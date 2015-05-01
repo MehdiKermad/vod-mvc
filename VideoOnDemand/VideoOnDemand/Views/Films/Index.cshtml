@@ -33,13 +33,13 @@
     {
         <div class="col-md-3">
             <a href="@Url.Action("Details", "Films", new { id = films.ElementAt(i).Id })">
-                @if (File.Exists(Server.MapPath("~/Content/Images/" + films.ElementAt(i).Id + ".jpg"))) //on verifie que la jacket existe
+                @if (File.Exists(Server.MapPath("~/Content/Images/Jackets/" + films.ElementAt(i).Id + ".jpg"))) //on verifie que la jacket existe
                 {
-                    <img src="@Url.Content("~/Content/Images/" + films.ElementAt(i).Id + ".jpg")" style="width:130px; height:200px;" />
+                    <img src="@Url.Content("~/Content/Images/Jackets/" + films.ElementAt(i).Id + ".jpg")" style="width:130px; height:200px;" />
                 }
                 else //sinon on affiche la jacket d'absence
                 {
-                    <img src="@Url.Content("~/Content/Images/PasDeJacket.jpg")" style="width:130px; height:200px;" />
+                    <img src="@Url.Content("~/Content/Images/Jackets/PasDeJacket.jpg")" style="width:130px; height:200px;" />
                 }
 
             </a>

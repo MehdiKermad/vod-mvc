@@ -64,7 +64,7 @@ namespace VideoOnDemand.Controllers
 
                     if (jack != null && jack.ContentLength > 0)
                     {
-                        var path = Path.Combine(Server.MapPath("~/Content/Images/"), film.Id + ".jpg");
+                        var path = Path.Combine(Server.MapPath("~/Content/Images/Jackets/"), film.Id + ".jpg");
                         jack.SaveAs(path);
                     }
                 }
@@ -108,7 +108,7 @@ namespace VideoOnDemand.Controllers
 
                     if (jack != null && jack.ContentLength > 0)
                     {
-                        var path = Path.Combine(Server.MapPath("~/Content/Images/"), film.Id + ".jpg");
+                        var path = Path.Combine(Server.MapPath("~/Content/Images/Jackets/"), film.Id + ".jpg");
                         jack.SaveAs(path);
                     }
                 }
@@ -142,7 +142,7 @@ namespace VideoOnDemand.Controllers
             db.Films.Remove(film);
             db.SaveChanges();
 
-            var path = Path.Combine(Server.MapPath("~/Content/Images/"), film.Id + ".jpg");
+            var path = Path.Combine(Server.MapPath("~/Content/Images/Jackets/"), film.Id + ".jpg");
             if (System.IO.File.Exists(path)) //si une jacket existe on l'efface
             {
                 System.IO.File.Delete(path);
