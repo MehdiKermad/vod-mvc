@@ -31,6 +31,7 @@
 </div>
 @{
     int nbAffichage;
+    int resteFilms = 1; //détermine si il reste des film
     
     try {
         films.RemoveRange(0, (page * 16));
@@ -44,11 +45,13 @@
         else
         {
             nbAffichage = nbFilms;
+            resteFilms = 0;
         }
     }
-    catch(Exception e)
+    catch(Exception e) //si on a atteint la fin de la liste
     {
         nbAffichage = 0;
+        resteFilms = 0;
     }
 }
 <div id="listeFilms" class="col-md-offset-1 col-md-9 well well-sm text-center">
@@ -73,6 +76,21 @@
         </div>
     }
     
-    <a id="precedentPage" class="scrollUp pull-left">Précédent</a>
-    <a id="suivantPage" class="scrollUp pull-right">Suivant</a>
+    <div style="bottom:0px;">
+        <a id="precedentPage" class="scrollUp pull-left" href="@Url.Action("Index", "Films", new { id = (page-1) })">Précédent</a>
+        <a id="suivantPage" class="scrollUp pull-right" href="@Url.Action("Index", "Films", new { id = (page+1) })">Suivant</a>
+    </div>
 </div>
+<script>
+    $(document).ready(function () {
+        var page = @page;
+        var resteFilms = @resteFilms;
+
+        if(page <= 0) {
+            $("#precedentPage").removeAttr('href');
+        }
+        if(resteFilms == 0) {
+            $("#suivantPage").removeAttr('href');
+        }
+    });
+</script>
