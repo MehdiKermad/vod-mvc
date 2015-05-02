@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using VideoOnDemand.DAL;
 using VideoOnDemand.Models;
+using VideoOnDemand.ModelViews;
 
 namespace VideoOnDemand.Controllers
 {
@@ -37,6 +38,11 @@ namespace VideoOnDemand.Controllers
         public ActionResult Search()
         {
             return View(db.Films);
+        }
+
+        public ActionResult Test(Search recherche)
+        {
+            return View(recherche);
         }
 
         // GET: Films/Details/5
