@@ -34,6 +34,11 @@ namespace VideoOnDemand.Controllers
             return View(films);
         }
 
+        public ActionResult Search()
+        {
+            return View(db.Films);
+        }
+
         // GET: Films/Details/5
         public ActionResult Details(int? id)
         {
