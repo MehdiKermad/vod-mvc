@@ -1,5 +1,4 @@
 ﻿@model IEnumerable<VideoOnDemand.Models.Film>
-@System.Web.Optimization.Scripts.Render("~/Scripts/Films")
 
 @{
     ViewBag.Title = "Index";
@@ -58,7 +57,7 @@
     <h4>Liste des films</h4>
     @for (int i = 0; i < nbAffichage; i++) //on affiche 16 films par page (ou ce qu'on a)
     {
-        <div class="col-md-3">
+        <div class="col-md-3 elementFilm">
             <a class="detailFilm" href="@Url.Action("Details", "Films", new { id = films.ElementAt(i).Id })">
                 @if (File.Exists(Server.MapPath("~/Content/Images/Jackets/" + films.ElementAt(i).Id + ".jpg"))) //on verifie que la jacket existe
                 {
@@ -72,7 +71,7 @@
             </a>
             <p class="nameFilm">@films.ElementAt(i).Name</p>
             <p class="sortieFilm">@films.ElementAt(i).Sortie.ToString("dd/MM/yyyy")</p>
-            
+
         </div>
     }
     
@@ -85,7 +84,14 @@
     $(document).ready(function () {
         var page = @page;
         var resteFilms = @resteFilms;
+        var tailleElement = $(".elementFilm").first().css("height");
 
+        //gestion de l'affichage
+        while($(".elementFilm").size()%4 != 0) {
+            $("<div class='elementFilm col-md-3' style='height:"+tailleElement+"'></div>").insertAfter($(".elementFilm").last());
+        }
+
+        //gestion des liens Précedent/Suivant
         if(page <= 0) {
             $("#precedentPage").removeAttr('href');
         }
