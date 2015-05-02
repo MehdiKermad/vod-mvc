@@ -60,10 +60,11 @@ namespace VideoOnDemand.Controllers
         // plus de détails, voir  http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Theme,Description,Sortie,Ajout")] Film film, HttpPostedFileBase jacket)
+        public ActionResult Create([Bind(Include = "Id,Name,Theme,Description,Sortie")] Film film, HttpPostedFileBase jacket)
         {
             if (ModelState.IsValid)
             {
+                film.Ajout = DateTime.Now;
                 db.Films.Add(film);
                 db.SaveChanges();
 
