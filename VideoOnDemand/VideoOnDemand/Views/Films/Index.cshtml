@@ -97,34 +97,6 @@
         while($(".elementFilm").size()%4 != 0) {
             $("<div class='elementFilm col-md-3' style='height:"+tailleElement+"'></div>").insertAfter($(".elementFilm").last());
         }
-        
-        var availableTags = [
-          "ActionScript",
-          "AppleScript",
-          "Asp",
-          "BASIC",
-          "C",
-          "C++",
-          "Clojure",
-          "COBOL",
-          "ColdFusion",
-          "Erlang",
-          "Fortran",
-          "Groovy",
-          "Haskell",
-          "Java",
-          "JavaScript",
-          "Lisp",
-          "Perl",
-          "PHP",
-          "Python",
-          "Ruby",
-          "Scala",
-          "Scheme"
-        ];
-        $( "#tags" ).autocomplete({
-            source: availableTags
-        });
 
         //gestion des liens Précedent/Suivant
         if(page <= 0) {
