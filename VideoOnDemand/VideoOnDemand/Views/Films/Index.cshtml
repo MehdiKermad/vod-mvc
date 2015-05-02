@@ -21,7 +21,7 @@
             {
                 <tr>
                     <td>
-                        @films.ElementAt(i).Name
+                        @Html.ActionLink(films.ElementAt(i).Name, "Details", "Films", new { id = films.ElementAt(i).Id },null)
                     </td>
                 </tr>
             }
