@@ -17,8 +17,17 @@ namespace VideoOnDemand.Controllers
         private VODContext db = new VODContext();
 
         // GET: Films
-        public ActionResult Index()
+        public ActionResult Index(int? id)
         {
+            if(id == null || id < 0)
+            {
+                ViewBag.pageFilms = 0;
+            }
+            else
+            {
+                ViewBag.pageFilms = id;
+            }
+
             var films = db.Films.OrderBy(film => film.Ajout);
             films.Reverse();
 
@@ -51,10 +60,11 @@ namespace VideoOnDemand.Controllers
         // plus de détails, voir  http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Theme,Description,Sortie,Ajout")] Film film, HttpPostedFileBase jacket)
+        public ActionResult Create([Bind(Include = "Id,Name,Theme,Description,Sortie")] Film film, HttpPostedFileBase jacket)
         {
             if (ModelState.IsValid)
             {
+                film.Ajout = DateTime.Now;
                 db.Films.Add(film);
                 db.SaveChanges();
 
@@ -159,5 +169,6 @@ namespace VideoOnDemand.Controllers
             }
             base.Dispose(disposing);
         }
+
     }
 }

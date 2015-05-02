@@ -6,47 +6,132 @@
     var films = Model.ToList();
     films.Reverse();
 
-    int nbFilms = films.Count();
+    int page = ViewBag.pageFilms;
+ 
 }
-
-<h2>Index</h2>
-
+<!--
+<div class="navbar-collapse collapse">
+    <form class="navbar-form navbar-right" role="search">
+        <div class="form-group">
+            <input id="tags" type="text" class="form-control" placeholder="Rechercher un film">
+        </div>
+        <button type="submit" class="btn btn-default">Envoyer</button>
+    </form>
+</div>
+-->
 <div id="nouveauxFilms" class="col-md-2 well well-sm">
     <h4>Derniers films</h4>
     <table class="table table-striped">
         @for (var i = 0; i < 10; i++) //affichage des 10 derniers films
         {     
-            if(i<nbFilms) //on affiche le tb complet seulement si il y'a au minimum 10 films
+            if(i<films.Count()) //on affiche le tb complet seulement si il y'a au minimum 10 films
             {
                 <tr>
                     <td>
-                        @films.ElementAt(i).Name
+                        @Html.ActionLink(films.ElementAt(i).Name, "Details", "Films", new { id = films.ElementAt(i).Id }, null)
                     </td>
                 </tr>
             }
         }
     </table>
 </div>
+@{
+    int nbAffichage;
+    int resteFilms = 1; //détermine si il reste des film
+    
+    try {
+        films.RemoveRange(0, (page * 16));
+
+        int nbFilms = films.Count();
+
+        if (nbFilms > 16)
+        {
+            nbAffichage = 16;
+        }
+        else
+        {
+            nbAffichage = nbFilms;
+            resteFilms = 0;
+        }
+    }
+    catch(Exception e) //si on a atteint la fin de la liste
+    {
+        nbAffichage = 0;
+        resteFilms = 0;
+    }
+}
 <div id="listeFilms" class="col-md-offset-1 col-md-9 well well-sm text-center">
     <h4>Liste des films</h4>
-    @for (int i = 0; i < nbFilms; i++)
+    @for (int i = 0; i < nbAffichage; i++) //on affiche 16 films par page (ou ce qu'on a)
     {
-        <div class="col-md-3">
-            <a href="@Url.Action("Details", "Films", new { id = films.ElementAt(i).Id })">
+        <div class="col-md-3 elementFilm">
+            <a class="detailFilm" href="@Url.Action("Details", "Films", new { id = films.ElementAt(i).Id })">
                 @if (File.Exists(Server.MapPath("~/Content/Images/Jackets/" + films.ElementAt(i).Id + ".jpg"))) //on verifie que la jacket existe
                 {
-                    <img src="@Url.Content("~/Content/Images/Jackets/" + films.ElementAt(i).Id + ".jpg")" style="width:130px; height:200px;" />
+                    <img class="jacketFilm" src="@Url.Content("~/Content/Images/Jackets/" + films.ElementAt(i).Id + ".jpg")" style="width:130px; height:200px;" />
                 }
                 else //sinon on affiche la jacket d'absence
                 {
-                    <img src="@Url.Content("~/Content/Images/Jackets/PasDeJacket.jpg")" style="width:130px; height:200px;" />
+                    <img class="jacketFilm" src="@Url.Content("~/Content/Images/Jackets/PasDeJacket.jpg")" style="width:130px; height:200px;" />
                 }
 
             </a>
             <p class="nameFilm">@films.ElementAt(i).Name</p>
             <p class="sortieFilm">@films.ElementAt(i).Sortie.ToString("dd/MM/yyyy")</p>
-            
+
         </div>
     }
-
+    
+    <div style="bottom:0px;">
+        <a id="precedentPage" class="scrollUp pull-left" href="@Url.Action("Index", "Films", new { id = (page-1) })">Précédent</a>
+        <a id="suivantPage" class="scrollUp pull-right" href="@Url.Action("Index", "Films", new { id = (page+1) })">Suivant</a>
+    </div>
 </div>
+<script>
+    $(document).ready(function () {
+        var page = @page;
+        var resteFilms = @resteFilms;
+        var tailleElement = $(".elementFilm").first().css("height");
+
+        //gestion de l'affichage
+        while($(".elementFilm").size()%4 != 0) {
+            $("<div class='elementFilm col-md-3' style='height:"+tailleElement+"'></div>").insertAfter($(".elementFilm").last());
+        }
+        
+        var availableTags = [
+          "ActionScript",
+          "AppleScript",
+          "Asp",
+          "BASIC",
+          "C",
+          "C++",
+          "Clojure",
+          "COBOL",
+          "ColdFusion",
+          "Erlang",
+          "Fortran",
+          "Groovy",
+          "Haskell",
+          "Java",
+          "JavaScript",
+          "Lisp",
+          "Perl",
+          "PHP",
+          "Python",
+          "Ruby",
+          "Scala",
+          "Scheme"
+        ];
+        $( "#tags" ).autocomplete({
+            source: availableTags
+        });
+
+        //gestion des liens Précedent/Suivant
+        if(page <= 0) {
+            $("#precedentPage").removeAttr('href');
+        }
+        if(resteFilms == 0) {
+            $("#suivantPage").removeAttr('href');
+        }
+    });
+</script>

@@ -6,6 +6,7 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
     <script src="~/Scripts/modernizr-2.6.2.js"></script>
 </head>
 <body>
@@ -17,9 +18,9 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Accueil", "Index", "Accueil", new { area = "" }, new { @class = "navbar-brand" })
-                @Html.ActionLink("Recherche", "Index", "VOD", new { area = "" }, new { @class = "navbar-brand" })
-                @Html.ActionLink("Profil", "Index", "Accueil", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Accueil", "Index", "Films", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Recherche", "Search", "Films", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Profil", "Index", "Users", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -30,13 +31,12 @@
 
     <div class="container body-content">
         @RenderBody()
-        <hr />
-        <footer class="text-center">
-            <p>Mehdi Kermad - Rachid Edjekouane - Mehmet Oktem</p>
-        </footer>
     </div>
 
-    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
+    <footer class="text-center">
+        <hr />
+        <p>Mehdi Kermad - Rachid Edjekouane - Mehmet Oktem</p>
+    </footer>
 </body>
 </html>
