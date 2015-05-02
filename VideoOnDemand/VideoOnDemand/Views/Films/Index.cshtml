@@ -6,19 +6,9 @@
     
     var films = Model.ToList();
     films.Reverse();
-    
-    int nbFilms = films.Count();
-    int nbAffichage;
-    int cpt = 0;
 
-    if (nbFilms > 16)
-    {
-        nbAffichage = 16;
-    }
-    else
-    {
-        nbAffichage = nbFilms;
-    }
+    int page = ViewBag.pageFilms;
+ 
 }
 
 <h2>Index</h2>
@@ -28,7 +18,7 @@
     <table class="table table-striped">
         @for (var i = 0; i < 10; i++) //affichage des 10 derniers films
         {     
-            if(i<nbFilms) //on affiche le tb complet seulement si il y'a au minimum 10 films
+            if(i<films.Count()) //on affiche le tb complet seulement si il y'a au minimum 10 films
             {
                 <tr>
                     <td>
@@ -39,6 +29,28 @@
         }
     </table>
 </div>
+@{
+    int nbAffichage;
+    
+    try {
+        films.RemoveRange(0, (page * 16));
+
+        int nbFilms = films.Count();
+
+        if (nbFilms > 16)
+        {
+            nbAffichage = 16;
+        }
+        else
+        {
+            nbAffichage = nbFilms;
+        }
+    }
+    catch(Exception e)
+    {
+        nbAffichage = 0;
+    }
+}
 <div id="listeFilms" class="col-md-offset-1 col-md-9 well well-sm text-center">
     <h4>Liste des films</h4>
     @for (int i = 0; i < nbAffichage; i++) //on affiche 16 films par page (ou ce qu'on a)
@@ -59,30 +71,8 @@
             <p class="sortieFilm">@films.ElementAt(i).Sortie.ToString("dd/MM/yyyy")</p>
             
         </div>
-        cpt++;
     }
     
     <a id="precedentPage" class="scrollUp pull-left">Précédent</a>
     <a id="suivantPage" class="scrollUp pull-right">Suivant</a>
 </div>
-<script>
-    $(document).ready(function () {
-        var pageFilm = 0;
-        $("#precedentPage").on("click", function () {
-            if (pageFilm > 0) {
-
-                pageFilm--;
-                console.log(pageFilm);
-            }
-        });
-
-        $("#suivantPage").on("click", function () {
-            if (pageFilm <= 0) {
-
-                pageFilm++;
-                
-
-            }
-        });
-    })
-</script>

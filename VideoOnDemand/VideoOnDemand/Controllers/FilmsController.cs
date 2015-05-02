@@ -17,8 +17,17 @@ namespace VideoOnDemand.Controllers
         private VODContext db = new VODContext();
 
         // GET: Films
-        public ActionResult Index()
+        public ActionResult Index(int? id)
         {
+            if(id == null || id < 0)
+            {
+                ViewBag.pageFilms = 0;
+            }
+            else
+            {
+                ViewBag.pageFilms = id;
+            }
+
             var films = db.Films.OrderBy(film => film.Ajout);
             films.Reverse();
 
