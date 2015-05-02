@@ -1,0 +1,52 @@
+﻿@model IEnumerable<VideoOnDemand.Models.Film>
+
+@{
+    ViewBag.Title = "Index";
+    
+    var films = Model.ToList();
+    films.Reverse();
+
+    int nbFilms = films.Count();
+}
+
+<h2>Index</h2>
+
+<div id="nouveauxFilms" class="col-md-2 well well-sm">
+    <h4>Derniers films</h4>
+    <table class="table table-striped">
+        @for (var i = 0; i < 10; i++) //affichage des 10 derniers films
+        {     
+            if(i<nbFilms) //on affiche le tb complet seulement si il y'a au minimum 10 films
+            {
+                <tr>
+                    <td>
+                        @films.ElementAt(i).Name
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+</div>
+<div id="listeFilms" class="col-md-offset-1 col-md-9 well well-sm text-center">
+    <h4>Liste des films</h4>
+    @for (int i = 0; i < nbFilms; i++)
+    {
+        <div class="col-md-3">
+            <a href="@Url.Action("Details", "Films", new { id = films.ElementAt(i).Id })">
+                @if (File.Exists(Server.MapPath("~/Content/Images/Jackets/" + films.ElementAt(i).Id + ".jpg"))) //on verifie que la jacket existe
+                {
+                    <img src="@Url.Content("~/Content/Images/Jackets/" + films.ElementAt(i).Id + ".jpg")" style="width:130px; height:200px;" />
+                }
+                else //sinon on affiche la jacket d'absence
+                {
+                    <img src="@Url.Content("~/Content/Images/Jackets/PasDeJacket.jpg")" style="width:130px; height:200px;" />
+                }
+
+            </a>
+            <p class="nameFilm">@films.ElementAt(i).Name</p>
+            <p class="sortieFilm">@films.ElementAt(i).Sortie.ToString("dd/MM/yyyy")</p>
+            
+        </div>
+    }
+
+</div>
