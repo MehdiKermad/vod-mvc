@@ -1,10 +1,10 @@
 ﻿@model VideoOnDemand.Models.Film
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Recherche";
 }
 
-<h2>Details</h2>
+<h2>Recherche</h2>
 
 <div>
     <h4>Film</h4>
@@ -35,32 +35,20 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Nationality)
+            @Html.DisplayNameFor(model => model.Sortie)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Nationality)
+            @Html.DisplayFor(model => model.Sortie)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.ReleaseDateFilm)
+            @Html.DisplayNameFor(model => model.Ajout)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.ReleaseDateFilm)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.AddDateFilm)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.AddDateFilm)
+            @Html.DisplayFor(model => model.Ajout)
         </dd>
 
     </dl>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

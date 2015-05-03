@@ -15,5 +15,6 @@ namespace VideoOnDemand.DAL
         public DbSet<Film> Films { get; set; }
         public DbSet<Actor> Actors { get; set; }
         public DbSet<Director> Directors { get; set; }
+        public DbSet<Comment> Comments { get; set; }
     }
 }

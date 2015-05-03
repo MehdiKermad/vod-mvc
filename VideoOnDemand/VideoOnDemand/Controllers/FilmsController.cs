@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -17,21 +16,9 @@ namespace VideoOnDemand.Controllers
         private VODContext db = new VODContext();
 
         // GET: Films
-        public ActionResult Index(int? id)
+        public ActionResult Index()
         {
-            if(id == null || id < 0)
-            {
-                ViewBag.pageFilms = 0;
-            }
-            else
-            {
-                ViewBag.pageFilms = id;
-            }
-
-            var films = db.Films.OrderBy(film => film.Ajout);
-            films.Reverse();
-
-            return View(films);
+            return View(db.Films.ToList());
         }
 
         // GET: Films/Details/5
@@ -60,25 +47,12 @@ namespace VideoOnDemand.Controllers
         // plus de détails, voir  http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Theme,Description,Sortie")] Film film, HttpPostedFileBase jacket)
+        public ActionResult Create([Bind(Include = "Id,Name,Theme,Description,Nationality,ReleaseDateFilm,AddDateFilm")] Film film)
         {
             if (ModelState.IsValid)
             {
-                film.Ajout = DateTime.Now;
                 db.Films.Add(film);
                 db.SaveChanges();
-
-                if (Request.Files.Count > 0) //sauvegarde de la jacket si elle a été envoyée
-                {
-                    var jack = Request.Files[0];
-
-                    if (jack != null && jack.ContentLength > 0)
-                    {
-                        var path = Path.Combine(Server.MapPath("~/Content/Images/Jackets/"), film.Id + ".jpg");
-                        jack.SaveAs(path);
-                    }
-                }
-
                 return RedirectToAction("Index");
             }
 
@@ -105,24 +79,12 @@ namespace VideoOnDemand.Controllers
         // plus de détails, voir  http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Theme,Description,Sortie,Ajout")] Film film, HttpPostedFileBase jacket)
+        public ActionResult Edit([Bind(Include = "Id,Name,Theme,Description,Nationality,ReleaseDateFilm,AddDateFilm")] Film film)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(film).State = EntityState.Modified;
                 db.SaveChanges();
-
-                if (Request.Files.Count > 0) //sauvegarde de la jacket si elle a été envoyée
-                {
-                    var jack = Request.Files[0];
-
-                    if (jack != null && jack.ContentLength > 0)
-                    {
-                        var path = Path.Combine(Server.MapPath("~/Content/Images/Jackets/"), film.Id + ".jpg");
-                        jack.SaveAs(path);
-                    }
-                }
-
                 return RedirectToAction("Index");
             }
             return View(film);
@@ -151,13 +113,6 @@ namespace VideoOnDemand.Controllers
             Film film = db.Films.Find(id);
             db.Films.Remove(film);
             db.SaveChanges();
-
-            var path = Path.Combine(Server.MapPath("~/Content/Images/Jackets/"), film.Id + ".jpg");
-            if (System.IO.File.Exists(path)) //si une jacket existe on l'efface
-            {
-                System.IO.File.Delete(path);
-            }
-
             return RedirectToAction("Index");
         }
 
@@ -169,6 +124,5 @@ namespace VideoOnDemand.Controllers
             }
             base.Dispose(disposing);
         }
-
     }
 }

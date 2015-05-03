@@ -15,8 +15,10 @@ namespace VideoOnDemand.Models
         public Director Director { get; set; }
         public String Theme { get; set; }
         public String Description { get; set; }
-        public DateTime Sortie { get; set; }
-        public DateTime Ajout { get; set; }
+        public string Nationality { get; set; }
+        public DateTime ReleaseDateFilm { get; set; }
+        public DateTime AddDateFilm { get; set; }
+        public virtual List<Actor> Actors { get; set; }
 
     }
 }

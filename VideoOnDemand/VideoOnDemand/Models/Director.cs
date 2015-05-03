@@ -10,5 +10,8 @@ namespace VideoOnDemand.Models
     {
         [Required]
         public int Id { get; set; }
+        public string Nationality { get; set; }
+        public virtual List<Actor> Actors { get; set; }
+        public virtual List<Film> Films { get; set; }
     }
 }
