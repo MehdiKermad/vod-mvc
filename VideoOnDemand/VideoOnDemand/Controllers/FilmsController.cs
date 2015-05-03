@@ -37,7 +37,10 @@ namespace VideoOnDemand.Controllers
 
         public ActionResult Search()
         {
-            ViewBag.listeThemes = db.Films.SqlQuery("SELECT DISTINCT * FROM dbo.Films").ToList();
+            List<string> themes = db.Films.Select(f => f.Theme).ToList();
+            themes.Sort();
+            ViewBag.listeThemes = themes.Distinct();
+
             return View();
         }
 
