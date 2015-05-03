@@ -56,6 +56,11 @@ namespace VideoOnDemand.Controllers
             return Json(films.ToList());
         }
 
+        public string Good(string test)
+        {
+            return test + "!";
+        }
+
         // GET: Films/Details/5
         public ActionResult Details(int? id)
         {
