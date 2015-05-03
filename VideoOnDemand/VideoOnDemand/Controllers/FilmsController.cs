@@ -37,12 +37,20 @@ namespace VideoOnDemand.Controllers
 
         public ActionResult Search()
         {
-            return View(db.Films);
+            
+            return View();
         }
 
-        public ActionResult Test(Search recherche)
+        public JsonResult Resultats(SearchViewModel rech) //effectue le tri en fonction des critères
         {
-            return View(recherche);
+            IQueryable<Film> films = db.Films;
+
+            if (rech.Theme != null)
+            {
+                films = films.Where(f => f.Theme == rech.Theme);
+            }
+
+            return Json(films.ToList());
         }
 
         // GET: Films/Details/5

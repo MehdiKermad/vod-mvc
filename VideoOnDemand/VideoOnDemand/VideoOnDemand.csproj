@@ -135,7 +135,7 @@
     <Compile Include="Models\Film.cs" />
     <Compile Include="Models\Personn.cs" />
     <Compile Include="Models\User.cs" />
-    <Compile Include="ModelViews\Search.cs" />
+    <Compile Include="ModelViews\SearchViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
