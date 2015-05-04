@@ -60,6 +60,35 @@
 
     </dl>
 </div>
+
+@{
+    Html.RenderAction("Commentaire", new { id = ViewBag.Id });
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Tous les commentaires</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <div class="col-md-10">
+                <label for="comment" class="control-label">Vos commentaires :</label>
+                <textarea name="comment" id="comment" class="form-control" cols="20" rows="4" placeholder="Partagez votre avis"></textarea>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Publier" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
