@@ -16,6 +16,8 @@ namespace VideoOnDemand.Models
         [Required]
         public String Pseudo { get; set; }
         [Required]
+        [DataType(DataType.Password)]
+        [Display(Name = "Mot de passe")]
         public String Mdp { get; set; }
         public bool Admin { get; set; }
     }

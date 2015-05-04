@@ -11,6 +11,11 @@
 }
 <h2>Index</h2>
 
+<h6 style="text-align:right">@if (@Session["LoginName"] != null)
+{
+    <small> Bonjour @Session["LoginName"]</small>
+}</h6>
+
 <div id="nouveauxFilms" class="col-md-2 well well-sm">
     <h4>Derniers films</h4>
     <table class="table table-striped">
