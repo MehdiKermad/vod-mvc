@@ -6,9 +6,6 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
-    <script src="~/Scripts/modernizr-2.6.2.js"></script>
-    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -24,8 +21,12 @@
                 @Html.ActionLink("Profil", "Index", "Users", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                </ul>
+                <form class="navbar-form navbar-right" role="search">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Recherche</button>
+                </form>
             </div>
         </div>
     </div>
@@ -34,10 +35,16 @@
         @RenderBody()
     </div>
 
+    <div class="navbar navbar navbar-fixed-bottom">
+        <div class="container">
+                <p class="text-center">Mehdi Kermad - Rachid Edjekouane - Mehmet Oktem</p>
+     
+        </div>
+    </div>
+
     <script src="~/Scripts/bootstrap.min.js"></script>
-    <footer class="text-center">
-        <hr />
-        <p>Mehdi Kermad - Rachid Edjekouane - Mehmet Oktem</p>
-    </footer>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
 </body>
 </html>

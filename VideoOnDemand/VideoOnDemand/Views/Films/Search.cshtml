@@ -3,18 +3,21 @@
 }
 
 <h2>Search</h2>
+    <div class="form-group">
+        @Html.Label("listeThemes", "Thème")
+        @Html.DropDownList("listeThemes", new SelectList(ViewBag.listeThemes), new { @class = "form-control" })
+    </div>
 
-@Html.Label("listeThemes", "Thème");
-@Html.DropDownList("listeThemes", new SelectList(ViewBag.listeThemes))
+    <div class="form-group">        
+        @Html.Label("listeNationalities", "Nationnalité")
+        @Html.DropDownList("listeNationalities", new SelectList(ViewBag.listeNationalities), new { @class = "form-control" })
+    </div>
 
-@Html.Label("listeNationalities", "Nationnalité");
-@Html.DropDownList("listeNationalities", new SelectList(ViewBag.listeNationalities))
-
-<ul id="triFilms">
+    <ul id="triFilms">
     
-</ul>
+    </ul>
 
-<button id="startRecherche" type="submit" class="btn btn-default">Rechercher</button>
+    <button id="startRecherche" type="submit" class="btn btn-default btn-primary">Rechercher</button>
 
 <script>
     $("#startRecherche").on("click", function () {
