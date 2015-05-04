@@ -6,7 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using VideoOnDemand.DAL;
+using VideoOnDemand.Entity;
 using VideoOnDemand.Models;
 
 namespace VideoOnDemand.Controllers

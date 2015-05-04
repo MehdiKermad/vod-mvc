@@ -7,7 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using VideoOnDemand.DAL;
+using VideoOnDemand.Entity;
 using VideoOnDemand.Models;
 using VideoOnDemand.ModelViews;
 
@@ -20,7 +20,7 @@ namespace VideoOnDemand.Controllers
         // GET: Films
         public ActionResult Index(int? id)
         {
-            if(id == null || id < 0)
+            if (id == null || id < 0)
             {
                 ViewBag.pageFilms = 0;
             }
@@ -29,7 +29,7 @@ namespace VideoOnDemand.Controllers
                 ViewBag.pageFilms = id;
             }
 
-            var films = db.Films.OrderBy(film => film.Ajout);
+            var films = db.Films.OrderBy(film => film.AddDateFilm);
             films.Reverse();
 
             return View(films);
@@ -54,11 +54,6 @@ namespace VideoOnDemand.Controllers
             }
 
             return Json(films.ToList());
-        }
-
-        public string Good(string test)
-        {
-            return test + "!";
         }
 
         // GET: Films/Details/5
@@ -87,11 +82,11 @@ namespace VideoOnDemand.Controllers
         // plus de détails, voir  http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Theme,Description,Sortie")] Film film, HttpPostedFileBase jacket)
+        public ActionResult Create([Bind(Include = "Id,Name,Theme,Description,Nationality,ReleaseDateFilm")] Film film, HttpPostedFileBase jacket)
         {
             if (ModelState.IsValid)
             {
-                film.Ajout = DateTime.Now;
+                film.AddDateFilm = DateTime.Now;
                 db.Films.Add(film);
                 db.SaveChanges();
 
@@ -132,7 +127,7 @@ namespace VideoOnDemand.Controllers
         // plus de détails, voir  http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Theme,Description,Sortie,Ajout")] Film film, HttpPostedFileBase jacket)
+        public ActionResult Edit([Bind(Include = "Id,Name,Theme,Description,Nationality,ReleaseDateFilm,AddDateFilm")] Film film, HttpPostedFileBase jacket)
         {
             if (ModelState.IsValid)
             {
@@ -196,6 +191,5 @@ namespace VideoOnDemand.Controllers
             }
             base.Dispose(disposing);
         }
-
     }
 }

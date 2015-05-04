@@ -11,18 +11,6 @@
     <h4>Film</h4>
     <hr />
     <dl class="dl-horizontal">
-        
-        @if (File.Exists(Server.MapPath("~/Content/Images/" + Model.Id + ".jpg"))) //on verifie que la jacket existe
-        {
-            <dt>
-                Jacket
-            </dt>
-            <dd>
-                <img src="@Url.Content("~/Content/Images/" + Model.Id + ".jpg")" style="width:130px; height:200px;" />
-            </dd>
-        }
-        
-        
         <dt>
             @Html.DisplayNameFor(model => model.Name)
         </dt>
@@ -48,19 +36,27 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Sortie)
+            @Html.DisplayNameFor(model => model.Nationality)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Sortie)
+            @Html.DisplayFor(model => model.Nationality)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Ajout)
+            @Html.DisplayNameFor(model => model.ReleaseDateFilm)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Ajout)
+            @Html.DisplayFor(model => model.ReleaseDateFilm)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AddDateFilm)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AddDateFilm)
         </dd>
 
     </dl>

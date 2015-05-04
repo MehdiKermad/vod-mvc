@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using VideoOnDemand.DAL;
+using VideoOnDemand.Entity;
 using VideoOnDemand.Models;
 
 namespace VideoOnDemand.ModelViews

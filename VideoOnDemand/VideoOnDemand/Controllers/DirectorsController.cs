@@ -6,7 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using VideoOnDemand.DAL;
+using VideoOnDemand.Entity;
 using VideoOnDemand.Models;
 
 namespace VideoOnDemand.Controllers
@@ -47,7 +47,7 @@ namespace VideoOnDemand.Controllers
         // plus de détails, voir  http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,FirstName,LastName,Birth")] Director director)
+        public ActionResult Create([Bind(Include = "Id,Nationality,FirstName,LastName,Birth")] Director director)
         {
             if (ModelState.IsValid)
             {
@@ -79,7 +79,7 @@ namespace VideoOnDemand.Controllers
         // plus de détails, voir  http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,FirstName,LastName,Birth")] Director director)
+        public ActionResult Edit([Bind(Include = "Id,Nationality,FirstName,LastName,Birth")] Director director)
         {
             if (ModelState.IsValid)
             {

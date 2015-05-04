@@ -2,12 +2,12 @@
 
 @{
     ViewBag.Title = "Index";
-    
+
     var films = Model.ToList();
     films.Reverse();
 
     int page = ViewBag.pageFilms;
- 
+
 }
 <h2>Index</h2>
 <!--
@@ -24,8 +24,8 @@
     <h4>Derniers films</h4>
     <table class="table table-striped">
         @for (var i = 0; i < 10; i++) //affichage des 10 derniers films
-        {     
-            if(i<films.Count()) //on affiche le tb complet seulement si il y'a au minimum 10 films
+        {
+            if (i < films.Count()) //on affiche le tb complet seulement si il y'a au minimum 10 films
             {
                 <tr>
                     <td>
@@ -39,8 +39,9 @@
 @{
     int nbAffichage;
     int resteFilms = 1; //détermine si il reste des film
-    
-    try {
+
+    try
+    {
         films.RemoveRange(0, (page * 16));
 
         int nbFilms = films.Count();
@@ -55,7 +56,7 @@
             resteFilms = 0;
         }
     }
-    catch(Exception e) //si on a atteint la fin de la liste
+    catch (Exception e) //si on a atteint la fin de la liste
     {
         nbAffichage = 0;
         resteFilms = 0;
@@ -78,11 +79,11 @@
 
             </a>
             <p class="nameFilm">@films.ElementAt(i).Name</p>
-            <p class="sortieFilm">@films.ElementAt(i).Sortie.ToString("dd/MM/yyyy")</p>
+            <p class="sortieFilm">@films.ElementAt(i).AddDateFilm.ToString("dd/MM/yyyy")</p>
 
         </div>
     }
-    
+
     <div style="bottom:0px;">
         <a id="precedentPage" class="scrollUp pull-left" href="@Url.Action("Index", "Films", new { id = (page-1) })">Précédent</a>
         <a id="suivantPage" class="scrollUp pull-right" href="@Url.Action("Index", "Films", new { id = (page+1) })">Suivant</a>
