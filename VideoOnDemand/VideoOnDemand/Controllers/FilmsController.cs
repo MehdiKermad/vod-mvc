@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -52,14 +53,25 @@ namespace VideoOnDemand.Controllers
         {
             IQueryable<Film> films = db.Films;
 
-            if (rech.Theme != null)
+            if (!String.IsNullOrWhiteSpace(rech.AddInfDate))
+            {
+                var dateInf = DateTime.ParseExact(rech.AddInfDate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                films = films.Where(f => f.ReleaseDateFilm >= dateInf);
+            }
+            if (!String.IsNullOrWhiteSpace(rech.AddSupDate))
+            {
+                var dateSup = DateTime.ParseExact(rech.AddSupDate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                films = films.Where(f => f.ReleaseDateFilm <= dateSup);
+            }
+            if (!String.IsNullOrWhiteSpace(rech.Theme))
             {
                 films = films.Where(f => f.Theme == rech.Theme);
             }
-            if (rech.Nationality != null)
+            if (!String.IsNullOrWhiteSpace(rech.Nationality))
             {
                 films = films.Where(f => f.Nationality == rech.Nationality);
             }
+
             return Json(films.ToList());
         }
 

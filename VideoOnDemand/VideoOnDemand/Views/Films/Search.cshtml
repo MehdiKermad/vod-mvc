@@ -22,9 +22,9 @@
     
     <div id="datePicker" class="input-daterange">
         @Html.Label("datePicker", "Date de sortie")
-        <input id="dateSupRecherche" type="text" class="input-small"/>
+        <input id="dateInfRecherche" type="text" class="input-small"/>
         <span>à</span>
-        <input id="dateInfRecherche" type="text" class="input-small" />
+        <input id="dateSupRecherche" type="text" class="input-small" />
     </div>
 
     <ul id="triFilms" class="list-group"></ul>
@@ -34,10 +34,12 @@
 <script>
     $(document).ready(function () {
 
+        //options du datepicker
         $('.input-daterange').datepicker({
-            orientation: "top auto",
             format: "dd/mm/yyyy",
-            language: "fr"
+            weekStart: 1,
+            language: "fr",
+            orientation: "top auto"
         });
 
         $("#startRecherche").on("click", function () {
@@ -47,7 +49,9 @@
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify({
                     "Theme": $("#listeThemes").val(),
-                    "Nationality": $("#listeNationalities").val()
+                    "Nationality": $("#listeNationalities").val(),
+                    "AddInfDate": $("#dateInfRecherche").val(),
+                    "AddSupDate": $("#dateSupRecherche").val()
                 }),
                 dataType: "json",
                 success: afficheResultats,
@@ -61,8 +65,7 @@
             });
         }
         function erreurResultats() {
-
-            alert("Erreur,veuillez réessayer");
+            $("#triFilms").html("<li>Erreur, veuillez réessayer</li>");
         }
     });
 </script>

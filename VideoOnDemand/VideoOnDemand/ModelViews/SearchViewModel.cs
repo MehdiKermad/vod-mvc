@@ -11,15 +11,18 @@ namespace VideoOnDemand.ModelViews
     {
         public string Theme { get; set; }
         public string Nationality { get; set; }
-        public DateTime ReleaseDate { get; set; }
+        public string AddInfDate { get; set; }
+        public string AddSupDate { get; set; }
 
         public SearchViewModel() { }
 
-        public SearchViewModel(string Theme, string Nationality, DateTime ReleaseDate)
+        public SearchViewModel(string Theme, string Nationality, string AddInfDate, string AddSupDate)
         {
             this.Theme = Theme;
             this.Nationality = Nationality;
-            this.ReleaseDate = ReleaseDate;
+            this.AddInfDate = AddInfDate;
+            this.AddSupDate = AddSupDate;
+            
         }
 
     }
