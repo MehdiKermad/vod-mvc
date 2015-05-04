@@ -1,0 +1,40 @@
+﻿@{
+    ViewBag.Title = "Search";
+}
+
+<h2>Search</h2>
+
+@Html.Label("listeTheme", "Thème");
+@Html.DropDownList("listeThemes", new SelectList(ViewBag.listeThemes))
+
+<ul id="triFilms">
+    
+</ul>
+
+<button id="startRecherche" type="submit" class="btn btn-default">Rechercher</button>
+
+<script>
+    $("#startRecherche").on("click", function () {
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("Resultats", "Films")',
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({
+                "Theme": $("#listeThemes").val()
+            }),
+            dataType: "json",
+            success: afficheResultats,
+            error: erreurResultats
+        });
+    });
+    function afficheResultats(result) {
+        $("#triFilms").empty();
+        jQuery.each(result, function (i, val) {
+            $("#triFilms").append("<li data-idFilm="+val.Id+">"+val.Name+"</li>");
+        });
+    }
+    function erreurResultats() {
+
+        alert("Erreur,veuillez réessayer");
+    }
+</script>

@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using VideoOnDemand.DAL;
 using VideoOnDemand.Models;
+using VideoOnDemand.ModelViews;
 
 namespace VideoOnDemand.Controllers
 {
@@ -32,6 +33,32 @@ namespace VideoOnDemand.Controllers
             films.Reverse();
 
             return View(films);
+        }
+
+        public ActionResult Search()
+        {
+            List<string> themes = db.Films.Select(f => f.Theme).ToList();
+            themes.Sort();
+            ViewBag.listeThemes = themes.Distinct();
+
+            return View();
+        }
+
+        public JsonResult Resultats(SearchViewModel rech) //effectue le tri en fonction des critères
+        {
+            IQueryable<Film> films = db.Films;
+
+            if (rech.Theme != null)
+            {
+                films = films.Where(f => f.Theme == rech.Theme);
+            }
+
+            return Json(films.ToList());
+        }
+
+        public string Good(string test)
+        {
+            return test + "!";
         }
 
         // GET: Films/Details/5
