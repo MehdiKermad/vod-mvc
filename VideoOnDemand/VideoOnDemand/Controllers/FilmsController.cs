@@ -41,6 +41,10 @@ namespace VideoOnDemand.Controllers
             themes.Sort();
             ViewBag.listeThemes = themes.Distinct();
 
+            List<string> nationalities = db.Films.Select(f => f.Nationality).ToList();
+            nationalities.Sort();
+            ViewBag.listeNationalities = nationalities.Distinct();
+            
             return View();
         }
 
@@ -52,7 +56,10 @@ namespace VideoOnDemand.Controllers
             {
                 films = films.Where(f => f.Theme == rech.Theme);
             }
-
+            if (rech.Nationality != null)
+            {
+                films = films.Where(f => f.Nationality == rech.Nationality);
+            }
             return Json(films.ToList());
         }
 

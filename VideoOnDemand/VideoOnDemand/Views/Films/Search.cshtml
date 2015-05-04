@@ -4,8 +4,11 @@
 
 <h2>Search</h2>
 
-@Html.Label("listeTheme", "Thème");
+@Html.Label("listeThemes", "Thème");
 @Html.DropDownList("listeThemes", new SelectList(ViewBag.listeThemes))
+
+@Html.Label("listeNationalities", "Nationnalité");
+@Html.DropDownList("listeNationalities", new SelectList(ViewBag.listeNationalities))
 
 <ul id="triFilms">
     
@@ -20,7 +23,8 @@
             url: '@Url.Action("Resultats", "Films")',
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify({
-                "Theme": $("#listeThemes").val()
+                "Theme": $("#listeThemes").val(),
+                "Nationality": $("#listeNationalities").val()
             }),
             dataType: "json",
             success: afficheResultats,
