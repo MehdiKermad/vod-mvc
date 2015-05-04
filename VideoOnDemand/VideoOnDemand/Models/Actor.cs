@@ -10,8 +10,8 @@ namespace VideoOnDemand.Models
     [Table("Acteur")]
     public class Actor : Personn
     {
-        [Required]
         [Key]
+        [Required]
         public int Id { get; set; }
         public string Nationality { get; set; }
         public string Biography { get; set; }
