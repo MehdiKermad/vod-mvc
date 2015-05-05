@@ -18,7 +18,14 @@ namespace VideoOnDemand.Controllers
         // GET: Directors
         public ActionResult Index()
         {
-            return View(db.Directors.ToList());
+            if ((String)Session["LoginAdmin"] == "True")
+            {
+                return View(db.Directors.ToList());
+            }
+            else
+            {
+                return RedirectToAction("../Films");
+            }
         }
 
         // GET: Directors/Details/5
@@ -33,13 +40,27 @@ namespace VideoOnDemand.Controllers
             {
                 return HttpNotFound();
             }
-            return View(director);
+            if ((String)Session["LoginAdmin"] == "True")
+            {
+                return View(director);
+            }
+            else
+            {
+                return RedirectToAction("../Films");
+            }
         }
 
         // GET: Directors/Create
         public ActionResult Create()
         {
-            return View();
+            if ((String)Session["LoginAdmin"] == "True")
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("../Films");
+            }
         }
 
         // POST: Directors/Create
@@ -71,7 +92,14 @@ namespace VideoOnDemand.Controllers
             {
                 return HttpNotFound();
             }
-            return View(director);
+            if ((String)Session["LoginAdmin"] == "True")
+            {
+                return View(director);
+            }
+            else
+            {
+                return RedirectToAction("../Films");
+            }
         }
 
         // POST: Directors/Edit/5
@@ -102,7 +130,14 @@ namespace VideoOnDemand.Controllers
             {
                 return HttpNotFound();
             }
-            return View(director);
+            if ((String)Session["LoginAdmin"] == "True")
+            {
+                return View(director);
+            }
+            else
+            {
+                return RedirectToAction("../Films");
+            }
         }
 
         // POST: Directors/Delete/5

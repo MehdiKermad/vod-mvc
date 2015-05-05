@@ -18,7 +18,14 @@ namespace VideoOnDemand.Controllers
         // GET: Actors
         public ActionResult Index()
         {
-            return View(db.Actors.ToList());
+            if ((String)Session["LoginAdmin"] == "True")
+            {
+                return View(db.Actors.ToList());
+            }
+            else
+            {
+                return RedirectToAction("../Films");
+            }
         }
 
         // GET: Actors/Details/5
@@ -33,13 +40,27 @@ namespace VideoOnDemand.Controllers
             {
                 return HttpNotFound();
             }
-            return View(actor);
+            if ((String)Session["LoginAdmin"] == "True")
+            {
+                return View(actor);
+            }
+            else
+            {
+                return RedirectToAction("../Films");
+            }
         }
 
         // GET: Actors/Create
         public ActionResult Create()
         {
-            return View();
+            if ((String)Session["LoginAdmin"] == "True")
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("../Films");
+            }
         }
 
         // POST: Actors/Create
@@ -71,7 +92,14 @@ namespace VideoOnDemand.Controllers
             {
                 return HttpNotFound();
             }
-            return View(actor);
+            if ((String)Session["LoginAdmin"] == "True")
+            {
+                return View(actor);
+            }
+            else
+            {
+                return RedirectToAction("../Films");
+            }
         }
 
         // POST: Actors/Edit/5
@@ -102,7 +130,14 @@ namespace VideoOnDemand.Controllers
             {
                 return HttpNotFound();
             }
-            return View(actor);
+            if ((String)Session["LoginAdmin"] == "True")
+            {
+                return View(actor);
+            }
+            else
+            {
+                return RedirectToAction("../Films");
+            }
         }
 
         // POST: Actors/Delete/5

@@ -33,7 +33,14 @@ namespace VideoOnDemand.Controllers
             {
                 return HttpNotFound();
             }
-            return View(comment);
+            if ((String)Session["LoginAdmin"] == "True")
+            {
+                return View(comment);
+            }
+            else
+            {
+                return RedirectToAction("../Films");
+            }
         }
 
         // GET: Comments/Create
@@ -70,8 +77,14 @@ namespace VideoOnDemand.Controllers
             if (comment == null)
             {
                 return HttpNotFound();
+            } if ((String)Session["LoginAdmin"] == "True")
+            {
+                return View(comment);
             }
-            return View(comment);
+            else
+            {
+                return RedirectToAction("../Films");
+            }
         }
 
         // POST: Comments/Edit/5
@@ -102,7 +115,14 @@ namespace VideoOnDemand.Controllers
             {
                 return HttpNotFound();
             }
-            return View(comment);
+            if ((String)Session["LoginAdmin"] == "True")
+            {
+                return View(comment);
+            }
+            else
+            {
+                return RedirectToAction("../Films");
+            }
         }
 
         // POST: Comments/Delete/5
