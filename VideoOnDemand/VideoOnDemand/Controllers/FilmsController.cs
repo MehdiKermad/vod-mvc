@@ -103,6 +103,10 @@ namespace VideoOnDemand.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Film film = db.Films.Find(id);
+            Comment comments = db.Comments.Find(id);
+
+            ViewBag.Commentaire = db.Comments.Include("Users").Single(g => g.Film == film);
+
             if (film == null)
             {
                 return HttpNotFound();
