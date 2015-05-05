@@ -10,7 +10,7 @@
     <h4>Film</h4>
     <hr />
     <dl class="dl-horizontal">
-        
+
         @if (File.Exists(Server.MapPath("~/Content/Images/Jackets/" + Model.Id + ".jpg"))) //on verifie que la jacket existe
         {
             <dt>
@@ -20,7 +20,7 @@
                 <img src="@Url.Content("~/Content/Images/Jackets/" + Model.Id + ".jpg")" style="width:130px; height:200px;" />
             </dd>
         }
-        
+
         <dt>
             @Html.DisplayNameFor(model => model.Name)
         </dt>
@@ -75,3 +75,39 @@
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+
+<h2>Commentaires</h2>
+
+@using (Html.BeginForm("Create", "Comments", FormMethod.Post)) 
+{
+     @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Tous les commentaires</h4>
+        <hr />
+        <input type="hidden" name="Id_Film" value="@Model.Id" />
+        <input type="hidden" name="Id_User" value="1" />
+        <div class="form-group">
+            <div class="col-md-10">
+                <textarea name="Message" class="form-control" placeholder="Partagez vos impressions" rows="5"></textarea>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                <select name="Marks" class="form-control">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+ }
