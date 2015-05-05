@@ -246,6 +246,7 @@
     <Content Include="Views\Actors\Index.cshtml" />
     <Content Include="Views\Users\Login.cshtml" />
     <Content Include="Views\Films\ListeFilm.cshtml" />
+    <Content Include="Views\Films\Visualisation.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

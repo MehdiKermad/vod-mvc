@@ -251,6 +251,42 @@ namespace VideoOnDemand.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult Visualisation(int? id)
+        {
+            id = 1; //ID de la vidéo de test
+            
+            if ((String)Session["LoginAdmin"] == "True") //les admins peuvent regarder gratuitement les films
+            {
+                if (id.HasValue)
+                {
+                    ViewBag.urlVideo = Path.Combine(Server.UrlPathEncode("/Content/Videos/"), id + ".mp4");
+                    return View();
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
+            }
+            else if((String)Session["LoginAdmin"] == "False") //les clients doivent payer (test du token)
+            {
+                //TODO implémenter ici les test token et id
+
+                if (id.HasValue)
+                {
+                    ViewBag.urlVideo = Path.Combine(Server.UrlPathEncode("/Content/Videos/"), id + ".mp4");
+                    return View();
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
+            }
+            else //les invités n'ont pas accès
+            {
+                return RedirectToAction("Index");
+            }
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
