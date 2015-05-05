@@ -24,7 +24,21 @@
                 @Html.ActionLink("Recherche", "Search", "Films", new { area = "" }, new { @class = "navbar-brand" })
                 @Html.ActionLink("Profil", "Index", "Users", new { area = "" }, new { @class = "navbar-brand" })              
             </div>
-            <div class="collapse navbar-collapse">
+
+            <div class="nav navbar-nav navbar-right">
+        
+                @if (@Session["LoginName"] == null)
+                {
+                    <form action="@Url.Action("Login","Users")" method="get" class="navbar-form navbar-right">
+                        <button type="submit" class="btn btn-success">Connexion</button>
+                    </form>
+                }
+                else
+                {
+                    <form action="@Url.Action("Logout","Users")" method="get" class="navbar-form navbar-right">
+                        <button type="submit" class="btn btn-danger">Deconnexion</button>
+                    </form>
+                }
                 <form class="nav navbar-form navbar-right" role="search">
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="Search">

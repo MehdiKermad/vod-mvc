@@ -54,7 +54,7 @@ namespace VideoOnDemand.Controllers
 
         public ActionResult Search()
         {
-            if ((bool)Session["LoginAdmin"])
+            if ((String)Session["LoginAdmin"]=="True")
             {
                 List<string> themes = db.Films.Select(f => f.Theme).ToList();
                 themes.Add("");
@@ -129,14 +129,7 @@ namespace VideoOnDemand.Controllers
         // GET: Films/Create
         public ActionResult Create()
         {
-            if ((String)Session["LoginAdmin"] == "True")
-            {
-                return View();
-            }
-            else
-            {
-                return RedirectToAction("Index");
-            }
+            return View();
         }
 
         // POST: Films/Create

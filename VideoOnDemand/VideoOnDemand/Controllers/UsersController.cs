@@ -168,6 +168,16 @@ namespace VideoOnDemand.Controllers
             return View(u);
         }
 
+        public ActionResult Logout()
+        {
+            Session.Remove("LoginUserID");
+            Session.Remove("LoginName");
+            Session.Remove("LoginAdmin");
+            Session.RemoveAll();
+
+            return Redirect("~/Films");
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
