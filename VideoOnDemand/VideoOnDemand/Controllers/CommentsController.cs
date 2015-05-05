@@ -59,7 +59,7 @@ namespace VideoOnDemand.Controllers
                 comment.Validated = false;
                 db.Comments.Add(comment);
                 db.SaveChanges();
-                return RedirectToAction("Details","Films");
+                return RedirectToAction("Details", "Films", new { id = Id_Film });
             }
 
             return View("~/View/Film/Index.cshtml");

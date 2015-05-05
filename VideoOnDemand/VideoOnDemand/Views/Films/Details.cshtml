@@ -7,27 +7,16 @@
 <h2>Details</h2>
 
 <div>
-    <h4>Film</h4>
+    <h4>@Html.DisplayFor(model => model.Name)</h4>
     <hr />
     <dl class="dl-horizontal">
 
         @if (File.Exists(Server.MapPath("~/Content/Images/Jackets/" + Model.Id + ".jpg"))) //on verifie que la jacket existe
         {
-            <dt>
-                Jacket
-            </dt>
             <dd>
                 <img src="@Url.Content("~/Content/Images/Jackets/" + Model.Id + ".jpg")" style="width:130px; height:200px;" />
             </dd>
         }
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
 
         <dt>
             @Html.DisplayNameFor(model => model.Theme)
@@ -61,19 +50,11 @@
             @Html.DisplayFor(model => model.ReleaseDateFilm)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.AddDateFilm)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.AddDateFilm)
-        </dd>
-
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Modifier", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Retour aux Films", "Index")
 </p>
 
 <h2>Commentaires</h2>
@@ -89,7 +70,7 @@
         <input type="hidden" name="Id_User" value="1" />
         <div class="form-group">
             <div class="col-md-10">
-                <textarea name="Message" class="form-control" placeholder="Partagez vos impressions" rows="5"></textarea>
+                <textarea name="Message" class="form-control" placeholder="Partagez vos impressions" ></textarea>
             </div>
         </div>
 
@@ -111,3 +92,7 @@
         </div>
     </div>
  }
+
+<div class="form-horizontal">
+    @ViewBag.Commentaire.Message
+</div>
