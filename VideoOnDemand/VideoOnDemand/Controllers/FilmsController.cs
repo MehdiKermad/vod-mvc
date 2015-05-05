@@ -44,40 +44,25 @@ namespace VideoOnDemand.Controllers
 
         public ActionResult ListeFilm()
         {
-            if ((String)Session["LoginAdmin"] == "True")
-            {
-                var films = db.Films.OrderBy(film => film.AddDateFilm);
-                films.Reverse();
+            var films = db.Films.OrderBy(film => film.AddDateFilm);
+            films.Reverse();
 
-                return View(films);
-            }
-            else
-            {
-                return RedirectToAction("Index");
-            }
-
+            return View(films);
         }
 
         public ActionResult Search()
         {
-            if ((String)Session["LoginAdmin"]=="True")
-            {
-                List<string> themes = db.Films.Select(f => f.Theme).ToList();
-                themes.Add("");
-                themes.Sort();
-                ViewBag.listeThemes = themes.Distinct();
+            List<string> themes = db.Films.Select(f => f.Theme).ToList();
+            themes.Add("");
+            themes.Sort();
+            ViewBag.listeThemes = themes.Distinct();
 
-                List<string> nationalities = db.Films.Select(f => f.Nationality).ToList();
-                nationalities.Add("");
-                nationalities.Sort();
-                ViewBag.listeNationalities = nationalities.Distinct();
+            List<string> nationalities = db.Films.Select(f => f.Nationality).ToList();
+            nationalities.Add("");
+            nationalities.Sort();
+            ViewBag.listeNationalities = nationalities.Distinct();
             
-                return View();
-            }
-            else
-            {
-                return RedirectToAction("Index");
-            }
+            return View();
         }
 
         public JsonResult Resultats(SearchViewModel rech) //effectue le tri en fonction des critères
@@ -122,13 +107,8 @@ namespace VideoOnDemand.Controllers
             {
                 return HttpNotFound();
             }
-            if ((String)Session["LoginAdmin"] == "True") {
-                return View(film);
-            }
-            else
-            {
-                return RedirectToAction("Index");
-            }
+
+            return View(film);
             
         }
 
@@ -183,8 +163,11 @@ namespace VideoOnDemand.Controllers
             if ((String)Session["LoginAdmin"] == "True")
             {
                 return View(film);
-            }else
+            }
+            else
             {
+                TempData["msg"] = "Vous n'êtes pas autorisé à éditer un film";
+                TempData["msgType"] = "alert-warning";
                 return RedirectToAction("Index");
             }
         }
@@ -196,7 +179,7 @@ namespace VideoOnDemand.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Name,Theme,Description,Nationality,ReleaseDateFilm,AddDateFilm")] Film film, HttpPostedFileBase jacket)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && (String)Session["LoginAdmin"] == "True")
             {
                 db.Entry(film).State = EntityState.Modified;
                 db.SaveChanges();
@@ -235,6 +218,8 @@ namespace VideoOnDemand.Controllers
             }
             else
             {
+                TempData["msg"] = "Vous n'êtes pas autorisé à supprimer ce film";
+                TempData["msgType"] = "alert-danger";
                 return RedirectToAction("Index");
             }
         }
@@ -244,14 +229,23 @@ namespace VideoOnDemand.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Film film = db.Films.Find(id);
-            db.Films.Remove(film);
-            db.SaveChanges();
 
-            var path = Path.Combine(Server.MapPath("~/Content/Images/Jackets/"), film.Id + ".jpg");
-            if (System.IO.File.Exists(path)) //si une jacket existe on l'efface
+            if ((String)Session["LoginAdmin"] == "True")
             {
-                System.IO.File.Delete(path);
+                Film film = db.Films.Find(id);
+                db.Films.Remove(film);
+                db.SaveChanges();
+
+                var path = Path.Combine(Server.MapPath("~/Content/Images/Jackets/"), film.Id + ".jpg");
+                if (System.IO.File.Exists(path)) //si une jacket existe on l'efface
+                {
+                    System.IO.File.Delete(path);
+                }
+            }
+            else
+            {
+                TempData["msg"] = "Vous n'êtes pas autorisé à supprimer ce film";
+                TempData["msgType"] = "alert-danger";
             }
 
             return RedirectToAction("Index");
@@ -270,6 +264,8 @@ namespace VideoOnDemand.Controllers
                 }
                 else
                 {
+                    TempData["msg"] = "Le film n'existe pas";
+                    TempData["msgType"] = "alert-warning";
                     return RedirectToAction("Index");
                 }
             }
@@ -284,11 +280,15 @@ namespace VideoOnDemand.Controllers
                 }
                 else
                 {
+                    TempData["msg"] = "Le film n'existe pas";
+                    TempData["msgType"] = "alert-warning";
                     return RedirectToAction("Index");
                 }
             }
             else //les invités n'ont pas accès
             {
+                TempData["msg"] = "Veuillez vous connecter";
+                TempData["msgType"] = "alert-warning";
                 return RedirectToAction("Index");
             }
         }

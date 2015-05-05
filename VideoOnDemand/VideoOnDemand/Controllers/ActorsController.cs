@@ -24,7 +24,7 @@ namespace VideoOnDemand.Controllers
             }
             else
             {
-                return RedirectToAction("../Films");
+                return RedirectToAction("Index","Films");
             }
         }
 
