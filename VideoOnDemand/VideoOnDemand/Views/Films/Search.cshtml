@@ -1,45 +1,97 @@
-﻿@{
+﻿@model VideoOnDemand.Models.Film
+
+@{
     ViewBag.Title = "Search";
 }
 
+<link href="~/Content/bootstrap-datepicker.css" rel="stylesheet" type="text/css" />
+<script src="~/Scripts/bootstrap-datepicker.js"></script>
+
+@Html.ActionLink("patternDetails", "Details", "Films", new { id = "replaceIdFilm" }, new { @id = "patternDetails", @style = "display:none;" })
+
 <h2>Search</h2>
-    <div class="form-group">
-        @Html.Label("listeThemes", "Thème")
-        @Html.DropDownList("listeThemes", new SelectList(ViewBag.listeThemes), new { @class = "form-control" })
+
+<div id="formRecherche" class="row">
+    <div class="col-lg-6">
+        <div class="form-group">
+            @Html.Label("listeThemes", "Thème")
+            @Html.DropDownList("listeThemes", new SelectList(ViewBag.listeThemes), new { @class = "form-control" })
+        </div>
+
+        <div class="form-group">
+            @Html.Label("listeNationalities", "Nationnalité")
+            @Html.DropDownList("listeNationalities", new SelectList(ViewBag.listeNationalities), new { @class = "form-control" })
+        </div>
     </div>
-
-    <div class="form-group">        
-        @Html.Label("listeNationalities", "Nationnalité")
-        @Html.DropDownList("listeNationalities", new SelectList(ViewBag.listeNationalities), new { @class = "form-control" })
+    <div class="col-lg-6">
+        <div id="datePicker" class="input-daterange">
+            @Html.Label("datePicker", "Date de sortie")
+            <input id="dateInfRecherche" type="text" class="input-small form-control" />
+            <br />
+            <input id="dateSupRecherche" type="text" class="input-small form-control" />
+        </div>
     </div>
+</div>
+<button id="startRecherche" type="submit" class="btn btn-default btn-primary">Rechercher</button>
 
-    <ul id="triFilms" class="list-group"></ul>
+<br /><br />
 
-    <button id="startRecherche" type="submit" class="btn btn-default btn-primary">Rechercher</button>
+<table id="triFilms" class="table table-striped table-hover table-bordered" style="display:none;">
+    <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Thème</th>
+            <th>Nationnalité</th>
+        </tr>
+    </thead>
+    <tbody>
+
+    </tbody>
+</table>
 
 <script>
-    $("#startRecherche").on("click", function () {
-        $.ajax({
-            type: "POST",
-            url: '@Url.Action("Resultats", "Films")',
-            contentType: "application/json; charset=utf-8",
-            data: JSON.stringify({
-                "Theme": $("#listeThemes").val(),
-                "Nationality": $("#listeNationalities").val()
-            }),
-            dataType: "json",
-            success: afficheResultats,
-            error: erreurResultats
-        });
-    });
-    function afficheResultats(result) {
-        $("#triFilms").empty();
-        jQuery.each(result, function (i, val) {
-            $("#triFilms").append("<li data-idFilm="+val.Id+">"+val.Name+"</li>");
-        });
-    }
-    function erreurResultats() {
+    $(document).ready(function () {
 
-        alert("Erreur,veuillez réessayer");
-    }
+        //options du datepicker
+        $('.input-daterange').datepicker({
+            format: "dd/mm/yyyy",
+            weekStart: 1,
+            language: "fr",
+            orientation: "top auto"
+        });
+
+        $("#startRecherche").on("click", function () {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("Resultats", "Films")',
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({
+                    "Theme": $("#listeThemes").val(),
+                    "Nationality": $("#listeNationalities").val(),
+                    "AddInfDate": $("#dateInfRecherche").val(),
+                    "AddSupDate": $("#dateSupRecherche").val()
+                }),
+                dataType: "json",
+                success: afficheResultats,
+                error: erreurResultats
+            });
+        });
+        function afficheResultats(result) {
+            $("#triFilms").find("tbody").empty();
+
+            jQuery.each(result, function (i, val) {
+                $("#triFilms").find("tbody").append("<tr>");
+                
+                $("#triFilms").find("tbody tr:last")
+                .append("<td><a href=" + $("#patternDetails").attr("href").replace("replaceIdFilm", val.Id) + ">" + val.Name + "</a></td>")
+                .append("<td>" + val.Theme + "</td>")
+                .append("<td>" + val.Nationality + "</td>")
+            });
+
+            $("#triFilms").fadeIn();
+        }
+        function erreurResultats() {
+            $("#triFilms").html("<li>Erreur, veuillez réessayer</li>");
+        }
+    });
 </script>
