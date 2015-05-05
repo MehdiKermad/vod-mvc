@@ -24,7 +24,7 @@ namespace VideoOnDemand.Controllers
             }
             else
             {
-                return RedirectToAction("../Films");
+                return RedirectToAction("Index", "Films");
             }
 
         }
@@ -32,23 +32,19 @@ namespace VideoOnDemand.Controllers
         // GET: Users/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
+            if(id.HasValue)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (((String)Session["LoginAdmin"] == "True") || ((String)Session["LoginUserID"] == id.ToString()))
+                {
+                    User user = db.Users.Find(id);
+                    return View(user);
+                }
             }
-            User user = db.Users.Find(id);
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
-            if ((String)Session["LoginAdmin"] == "True")
-            {
-                return View(user);
-            }
-            else
-            {
-                return RedirectToAction("../Films");
-            }
+
+            //ViewBag.msg = "Vous n'avez pas le droit de voir ce profil";
+            //ViewBag.msgType = "warning";
+            
+            return RedirectToAction("Index", "Films");
         }
 
         // GET: Users/Create
@@ -70,7 +66,7 @@ namespace VideoOnDemand.Controllers
                 db.SaveChanges();
 
                 Login(user); //l'utilisateur est directement connecté après inscription
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Films");
             }
 
             return View(user);
@@ -91,7 +87,7 @@ namespace VideoOnDemand.Controllers
             if ((String)Session["LoginAdmin"] == "True")
                 return View(user);
             else
-                return RedirectToAction("../Films");
+                return RedirectToAction("Index", "Films");
         }
 
         // POST: Users/Edit/5
@@ -105,12 +101,12 @@ namespace VideoOnDemand.Controllers
             {
                 db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Films");
             }
             if ((String)Session["LoginAdmin"] == "True")
                 return View(user);
             else
-                return RedirectToAction("../Films");
+                return RedirectToAction("Index", "Films");
         }
 
         // GET: Users/Delete/5
@@ -128,7 +124,7 @@ namespace VideoOnDemand.Controllers
             if ((String)Session["LoginAdmin"] == "True")
                 return View(user);
             else
-                return RedirectToAction("../Films");
+                return RedirectToAction("Index", "Films");
         }
 
         // POST: Users/Delete/5
@@ -139,7 +135,7 @@ namespace VideoOnDemand.Controllers
             User user = db.Users.Find(id);
             db.Users.Remove(user);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Films");
         }
 
 
@@ -164,7 +160,7 @@ namespace VideoOnDemand.Controllers
                     Session["LoginUserID"] = v.Id.ToString();
                     Session["LoginName"] = v.Pseudo.ToString();
                     Session["LoginAdmin"] = v.Admin.ToString();
-                    return RedirectToAction("../Films"); //Redirection vers la page d'accueil
+                    return RedirectToAction("Index","Films"); //Redirection vers la page d'accueil
                 }
             }
             return View(u);
