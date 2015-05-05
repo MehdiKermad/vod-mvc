@@ -115,7 +115,16 @@ namespace VideoOnDemand.Controllers
         // GET: Films/Create
         public ActionResult Create()
         {
-            return View();
+            if ((String)Session["LoginAdmin"] == "True")
+            {
+                return View();
+            }
+            else
+            {
+                TempData["msg"] = "Vous n'êtes pas autorisé à ajouter des films";
+                TempData["msgType"] = "alert-warning";
+                return RedirectToAction("Index");
+            }
         }
 
         // POST: Films/Create
@@ -125,7 +134,7 @@ namespace VideoOnDemand.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Name,Theme,Description,Nationality,ReleaseDateFilm")] Film film, HttpPostedFileBase jacket)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && (String)Session["LoginAdmin"] == "True")
             {
                 film.AddDateFilm = DateTime.Now;
                 db.Films.Add(film);
