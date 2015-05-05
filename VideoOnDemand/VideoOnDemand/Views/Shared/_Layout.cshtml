@@ -4,11 +4,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
-    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+
+    @System.Web.Optimization.Styles.Render("~/css")
+    @System.Web.Optimization.Styles.Render("~/js")
+
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
-    <script src="~/Scripts/bootstrap.min.js"></script>
-    <script src="~/Scripts/modernizr-2.6.2.js"></script>
     <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
 </head>
 <body>
@@ -22,10 +22,10 @@
                 </button>
                 @Html.ActionLink("Accueil", "Index", "Films", new { area = "" }, new { @class = "navbar-brand" })
                 @Html.ActionLink("Recherche", "Search", "Films", new { area = "" }, new { @class = "navbar-brand" })
-                @Html.ActionLink("Profil", "Index", "Users", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Profil", "Index", "Users", new { area = "" }, new { @class = "navbar-brand" })              
             </div>
-            <div class="navbar-collapse collapse">
-                <form class="navbar-form navbar-right" role="search">
+            <div class="collapse navbar-collapse">
+                <form class="nav navbar-form navbar-right" role="search">
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="Search">
                     </div>
