@@ -1,0 +1,21 @@
+﻿@model VideoOnDemand.Models.Film
+@{
+    ViewBag.Title = "Visualisation";
+}
+
+<h2>@Model.Name</h2>
+
+<div class="center-block">
+    <video id="visualisationFilm" width="750" controls>
+        <source src="@ViewBag.urlVideo" type="video/mp4">
+        Votre navigateur ne supporte pas les vidéos HTML5.
+    </video>
+</div>
+<script>
+    $(document).ready(function () {
+        //on bloque le menu contextuel (pour éviter le téléchargement)
+        $("#visualisationFilm").bind("contextmenu", function (){
+            return false;
+        });
+    });
+</script>
