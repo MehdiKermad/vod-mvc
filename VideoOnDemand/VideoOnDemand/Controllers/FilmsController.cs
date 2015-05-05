@@ -55,6 +55,10 @@ namespace VideoOnDemand.Controllers
         {
             IQueryable<Film> films = db.Films;
 
+            if (!String.IsNullOrWhiteSpace(rech.Name))
+            {
+                films = films.Where(f => f.Name.Contains(rech.Name));
+            }
             if (!String.IsNullOrWhiteSpace(rech.AddInfDate))
             {
                 var dateInf = DateTime.ParseExact(rech.AddInfDate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
