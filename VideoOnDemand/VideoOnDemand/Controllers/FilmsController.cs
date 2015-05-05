@@ -39,10 +39,12 @@ namespace VideoOnDemand.Controllers
         public ActionResult Search()
         {
             List<string> themes = db.Films.Select(f => f.Theme).ToList();
+            themes.Add("");
             themes.Sort();
             ViewBag.listeThemes = themes.Distinct();
 
             List<string> nationalities = db.Films.Select(f => f.Nationality).ToList();
+            nationalities.Add("");
             nationalities.Sort();
             ViewBag.listeNationalities = nationalities.Distinct();
             
