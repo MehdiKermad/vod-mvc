@@ -24,7 +24,7 @@ namespace VideoOnDemand.Controllers
             }
             else
             {
-                return RedirectToAction("Index", "Films");
+                return View("Index", "Films");
             }
 
         }
@@ -66,7 +66,8 @@ namespace VideoOnDemand.Controllers
                 db.SaveChanges();
 
                 Login(user); //l'utilisateur est directement connecté après inscription
-                return RedirectToAction("Index", "Films");
+
+                return View("Index", "Films");
             }
 
             return View(user);
@@ -160,9 +161,14 @@ namespace VideoOnDemand.Controllers
                     Session["LoginUserID"] = v.Id.ToString();
                     Session["LoginName"] = v.Pseudo.ToString();
                     Session["LoginAdmin"] = v.Admin.ToString();
+
                     return RedirectToAction("Index","Films"); //Redirection vers la page d'accueil
                 }
             }
+
+            ViewBag.msg = "Vos identifiants sont incorrects";
+            ViewBag.msgType = "alert-danger";
+
             return View(u);
         }
 
@@ -173,7 +179,10 @@ namespace VideoOnDemand.Controllers
             Session.Remove("LoginAdmin");
             Session.RemoveAll();
 
-            return Redirect("~/Films");
+            TempData["msg"] = "Vous êtes bien déconnecté";
+            TempData["msgType"] = "alert-default";
+
+            return RedirectToAction("Index","Films");
         }
 
         protected override void Dispose(bool disposing)

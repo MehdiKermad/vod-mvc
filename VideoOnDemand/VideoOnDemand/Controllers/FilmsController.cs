@@ -33,8 +33,11 @@ namespace VideoOnDemand.Controllers
             var films = db.Films.OrderBy(film => film.AddDateFilm);
             films.Reverse();
 
-            ViewBag.msg = "dfghj";
-            ViewBag.msgType = "alert-warning";
+            if (TempData["msg"] != null)
+            {
+                ViewBag.msg = TempData["msg"].ToString();
+                ViewBag.msgType = TempData["msgType"].ToString();
+            }
 
             return View(films);
         }
