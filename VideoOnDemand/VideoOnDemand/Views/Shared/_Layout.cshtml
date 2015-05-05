@@ -51,13 +51,14 @@
 
     <div class="container body-content">
         <br/>
-        <!--
-        <div class="alert alert-success" role="alert">
-            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-            <span></span>
-            <a href="#" class="close" data-dismiss="alert">&times;</a>
-        </div>
-            -->
+        @if (!String.IsNullOrEmpty(ViewBag.msg)) //si un message d'erreur existe on l'affiche
+        {
+            <div id="alerteMsg" class="alert @ViewBag.msgType" role="alert">
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                <span>@ViewBag.msg</span>
+                <a href="#" class="close" data-dismiss="alert" onclick="$('#alerteMsg').slideUp()">&times;</a>
+            </div>
+        }
         @RenderBody()
     </div>
 
