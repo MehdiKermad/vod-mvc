@@ -14,6 +14,11 @@
 <div id="formRecherche" class="row">
     <div class="col-lg-6">
         <div class="form-group">
+            @Html.Label("nomRecherche", "Nom")
+            @Html.TextBox("nomRecherche", null, new { @class="input-small form-control"})
+        </div>
+        
+        <div class="form-group">
             @Html.Label("listeThemes", "Thème")
             @Html.DropDownList("listeThemes", new SelectList(ViewBag.listeThemes), new { @class = "form-control" })
         </div>
@@ -66,6 +71,7 @@
                 url: '@Url.Action("Resultats", "Films")',
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify({
+                    "Name": $("#nomRecherche").val(),
                     "Theme": $("#listeThemes").val(),
                     "Nationality": $("#listeNationalities").val(),
                     "AddInfDate": $("#dateInfRecherche").val(),

@@ -9,6 +9,7 @@ namespace VideoOnDemand.ModelViews
 {
     public class SearchViewModel
     {
+        public string Name { get; set; }
         public string Theme { get; set; }
         public string Nationality { get; set; }
         public string AddInfDate { get; set; }
@@ -16,13 +17,13 @@ namespace VideoOnDemand.ModelViews
 
         public SearchViewModel() { }
 
-        public SearchViewModel(string Theme, string Nationality, string AddInfDate, string AddSupDate)
+        public SearchViewModel(string Name, string Theme, string Nationality, string AddInfDate, string AddSupDate)
         {
+            this.Name = Name;
             this.Theme = Theme;
             this.Nationality = Nationality;
             this.AddInfDate = AddInfDate;
             this.AddSupDate = AddSupDate;
-            
         }
 
     }
