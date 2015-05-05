@@ -1,0 +1,20 @@
+﻿@model Film
+@{
+    ViewBag.Title = "Visualisation";
+}
+
+<h2>Visualisation</h2>
+
+<video id="visualisationFilm" width="400" controls>
+    <source src="@ViewBag.urlVideo" type="video/mp4">
+    Votre navigateur ne supporte pas les vidéos HTML5.
+</video>
+
+<script>
+    $(document).ready(function () {
+        //on bloque le menu contextuel (pour éviter le téléchargement)
+        $("#visualisationFilm").bind("contextmenu", function (){
+            return false;
+        });
+    });
+</script>
