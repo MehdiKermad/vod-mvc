@@ -68,7 +68,9 @@ namespace VideoOnDemand.Controllers
             {
                 db.Users.Add(user);
                 db.SaveChanges();
-                return RedirectToAction("Login");
+
+                Login(user); //l'utilisateur est directement connecté après inscription
+                return RedirectToAction("Index");
             }
 
             return View(user);
