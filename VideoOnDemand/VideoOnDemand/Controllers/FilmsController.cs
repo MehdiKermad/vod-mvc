@@ -260,7 +260,7 @@ namespace VideoOnDemand.Controllers
                 if (id.HasValue)
                 {
                     ViewBag.urlVideo = Path.Combine(Server.UrlPathEncode("/Content/Videos/"), id + ".mp4");
-                    return View();
+                    return View(db.Films.Find(id));
                 }
                 else
                 {
@@ -274,7 +274,7 @@ namespace VideoOnDemand.Controllers
                 if (id.HasValue)
                 {
                     ViewBag.urlVideo = Path.Combine(Server.UrlPathEncode("/Content/Videos/"), id + ".mp4");
-                    return View();
+                    return View(db.Films.Find(id));
                 }
                 else
                 {
