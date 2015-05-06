@@ -4,56 +4,69 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2>Profil</h2>
 <hr />
-<div class="col-lg-3">
-    <h4>User</h4>
+<div class="col-lg-6">
+    <h4>Detail</h4>
     
     <dl class="dl-horizontal">
-        <dt>
+    
+        @if (File.Exists(Server.MapPath("~/Content/Images/Users/" + Model.Id + ".jpg"))) //on verifie que la jacket existe
+        {
+            <dd>
+                <img src="@Url.Content("~/Content/Images/Users/" + Model.Id + ".jpg")" style="width:130px; height:200px;" />
+            </dd>
+        }
+        else
+        {
+            <dd>
+                <img src="@Url.Content("~/Content/Images/Jackets/PasDeJacket2.jpg")" style="width:130px; height:200px;" />
+                Télécharger une photo de profil
+            </dd>
+        }
+        <dt class="text-info">
             @Html.DisplayNameFor(model => model.Pseudo)
         </dt>
 
-        <dd class="form-control">
+        <dd >
             @Html.DisplayFor(model => model.Pseudo)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Admin)
+        <dt class="text-info">
+            Prénom
         </dt>
 
-        <dd class="form-control">
-            @Html.DisplayFor(model => model.Admin)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.FirstName)
-        </dt>
-
-        <dd class="form-control">
+        <dd>
             @Html.DisplayFor(model => model.FirstName)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.LastName)
+        <dt class="text-info">
+            Nom
         </dt>
 
-        <dd class="form-control">
+        <dd>
             @Html.DisplayFor(model => model.LastName)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Birth)
+        <dt class="text-info">
+           Date de naissance
         </dt>
 
-        <dd class="form-control">
+        <dd>
             @Html.DisplayFor(model => model.Birth)
         </dd>
 
+        <dt class="text-info">
+            @Html.DisplayNameFor(model => model.Admin)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Admin)
+        </dd>
     </dl>
 
     <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn btn-primary" })
+        @Html.ActionLink("Modifier", "Edit", new { id = Model.Id }, new { @class = "btn btn-primary" })
     </p>
 </div>
 
