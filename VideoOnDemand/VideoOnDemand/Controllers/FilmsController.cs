@@ -102,7 +102,14 @@ namespace VideoOnDemand.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Film film = db.Films.Find(id);
+
+            var commentsList = db.Comments.Where(c => c.Film.Id == film.Id).OrderBy(c => c.Date).ToList();
+            commentsList.Reverse();
+
+            ViewBag.commentsList = commentsList;
+
             if (film == null)
             {
                 return HttpNotFound();

@@ -18,7 +18,7 @@ namespace VideoOnDemand.Controllers
         // GET: Comments
         public ActionResult Index()
         {
-            return View(db.Comments.ToList());
+            return View(db.Comments.ToList().OrderBy(comment=>comment.Date).Reverse());
         }
 
         // GET: Comments/Details/5
@@ -54,16 +54,22 @@ namespace VideoOnDemand.Controllers
         // plus de détails, voir  http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Message,Marks,Date,Validated")] Comment comment)
+        public ActionResult Create([Bind(Include = "Message,Marks")] Comment comment,int Id_User, int Id_Film)
         {
             if (ModelState.IsValid)
             {
+                User author = db.Users.Find(Id_User);
+                Film film = db.Films.Find(Id_Film);
+                comment.Author = author;
+                comment.Film = film;
+                comment.Date = DateTime.Now;
+                comment.Validated = false;
                 db.Comments.Add(comment);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", "Films", new { id = Id_Film });
             }
 
-            return View(comment);
+            return View("~/View/Film/Index.cshtml");
         }
 
         // GET: Comments/Edit/5
