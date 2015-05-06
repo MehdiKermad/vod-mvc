@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Details";
+    
 }
 
 <h2>Details</h2>
@@ -15,6 +16,12 @@
         {
             <dd>
                 <img src="@Url.Content("~/Content/Images/Jackets/" + Model.Id + ".jpg")" style="width:130px; height:200px;" />
+            </dd>
+        }
+        else
+        {
+            <dd>
+                <img src="@Url.Content("~/Content/Images/Jackets/PasDeJacket.jpg")" style="width:130px; height:200px;" />
             </dd>
         }
 
@@ -35,7 +42,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Nationality)
+            Nationalité
         </dt>
 
         <dd>
@@ -43,7 +50,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.ReleaseDateFilm)
+            Date de sortie
         </dt>
 
         <dd>
@@ -57,8 +64,8 @@
 </form>
 <br />
 <p>
-    @Html.ActionLink("Modifier", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Retour aux Films", "Index")
+    @Html.ActionLink("Modifier", "Edit", new { id = Model.Id }, new { @class = "btn btn-info" }) |
+    @Html.ActionLink("Retour aux Films", "Index", new { @class = "btn btn-info" })
 </p>
 
 <h2>Commentaires</h2>
@@ -106,6 +113,3 @@
         </div>
     </div>
 }
-
-<div class="form-horizontal">
-</div>

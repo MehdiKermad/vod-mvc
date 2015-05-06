@@ -182,7 +182,7 @@ namespace VideoOnDemand.Controllers
             }
             else
             {
-                TempData["msg"] = "Vous n'êtes pas autorisé à éditer un film";
+                TempData["msg"] = "Vous n'êtes pas autorisé à modifier un film";
                 TempData["msgType"] = "alert-warning";
                 return RedirectToAction("Index");
             }

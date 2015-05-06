@@ -1,4 +1,4 @@
-﻿@model VideoOnDemand.Models.Film
+﻿@model VideoOnDemand.Models.Director
 
 @{
     ViewBag.Title = "Search";
@@ -7,7 +7,7 @@
 <link href="~/Content/bootstrap-datepicker.css" rel="stylesheet" type="text/css" />
 <script src="~/Scripts/bootstrap-datepicker.js"></script>
 
-@Html.ActionLink("patternDetails", "Details", "Films", new { id = "replaceIdFilm" }, new { @id = "patternDetails", @style = "display:none;" })
+@Html.ActionLink("patternDetails", "Details", "Directors", new { id = "replaceIdDirectors" }, new { @id = "patternDetails", @style = "display:none;" })
 
 <h2>Recherche</h2>
 
@@ -15,28 +15,26 @@
     <div class="col-lg-6">
         <div class="form-group">
             @Html.Label("nomRecherche", "Nom")
-            @Html.TextBox("nomRecherche", null, new { @class="input-small form-control"})
-        </div>
-        
-        <div class="form-group">
-            @Html.Label("listeThemes", "Thème")
-            @Html.DropDownList("listeThemes", new SelectList(ViewBag.listeThemes), new { @class = "form-control" })
+            @Html.TextBox("nomRecherche", null, new { @class = "input-small form-control" })
         </div>
 
+        <div class="form-group">
+            @Html.Label("prenomRecherche", "Prenom")
+            @Html.TextBox("prenomRecherche", null, new { @class = "input-small form-control" })
+        </div>
+    </div>
+
+    <div class="col-lg-6">
         <div class="form-group">
             @Html.Label("listeNationalities", "Nationnalité")
             @Html.DropDownList("listeNationalities", new SelectList(ViewBag.listeNationalities), new { @class = "form-control" })
         </div>
-    </div>
-    <div class="col-lg-6">
-        <div id="datePicker" class="input-daterange">
-            @Html.Label("datePicker", "Date de sortie")
-            <br/>
-            Entre
-            <input id="dateInfRecherche" type="text" class="input-small form-control" />
-            <br/>
-            Et
-            <input id="dateSupRecherche" type="text" class="input-small form-control" />
+        
+        <div class="form-group">
+            <div id=" datepicker" class="input-daterange">
+                @Html.Label("datePicker", "Date de naissance")
+                <input id="dateNaissRecherche" type="text" class="input-small form-control" />
+            </div>
         </div>
     </div>
 </div>
@@ -44,11 +42,11 @@
 
 <br /><br />
 
-<table id="triFilms" class="table table-striped table-hover table-bordered" style="display:none;">
+<table id="triDirectors" class="table table-striped table-hover table-bordered" style="display:none;">
     <thead>
         <tr>
             <th>Nom</th>
-            <th>Thème</th>
+            <th>Prenom</th>
             <th>Nationnalité</th>
         </tr>
     </thead>
@@ -71,14 +69,13 @@
         $("#startRecherche").on("click", function () {
             $.ajax({
                 type: "POST",
-                url: '@Url.Action("Resultats", "Films")',
+                url: '@Url.Action("Resultats", "Directors")',
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify({
-                    "Name": $("#nomRecherche").val(),
-                    "Theme": $("#listeThemes").val(),
+                    "LastName": $("#nomRecherche").val(),
+                    "FirstName": $("#prenomRecherche").val(),
                     "Nationality": $("#listeNationalities").val(),
-                    "AddInfDate": $("#dateInfRecherche").val(),
-                    "AddSupDate": $("#dateSupRecherche").val()
+                    "AddNaissDate": $("#dateNaissRecherche").val(),
                 }),
                 dataType: "json",
                 success: afficheResultats,
@@ -86,21 +83,21 @@
             });
         });
         function afficheResultats(result) {
-            $("#triFilms").find("tbody").empty();
+            $("#triDirectors").find("tbody").empty();
 
             jQuery.each(result, function (i, val) {
-                $("#triFilms").find("tbody").append("<tr>");
+                $("#triDirectors").find("tbody").append("<tr>");
                 
-                $("#triFilms").find("tbody tr:last")
-                .append("<td><a href=" + $("#patternDetails").attr("href").replace("replaceIdFilm", val.Id) + ">" + val.Name + "</a></td>")
-                .append("<td>" + val.Theme + "</td>")
+                $("#triDirectors").find("tbody tr:last")
+                .append("<td><a href=" + $("#patternDetails").attr("href").replace("replaceIdDirectors", val.Id) + ">" + val.LastName + "</a></td>")
+                .append("<td>" + val.FirstName + "</td>")
                 .append("<td>" + val.Nationality + "</td>")
             });
 
-            $("#triFilms").fadeIn();
+            $("#triDirectors").fadeIn();
         }
         function erreurResultats() {
-            $("#triFilms").html("<li>Erreur, veuillez réessayer</li>");
+            $("#triDirectors").html("<li>Erreur, veuillez réessayer</li>");
         }
     });
 </script>

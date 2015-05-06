@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using VideoOnDemand.Entity;
 using VideoOnDemand.Models;
+using VideoOnDemand.ModelViews;
 
 namespace VideoOnDemand.Controllers
 {
@@ -16,16 +19,61 @@ namespace VideoOnDemand.Controllers
         private VODContext db = new VODContext();
 
         // GET: Directors
-        public ActionResult Index()
+        public ActionResult Index(int? id)
         {
-            if ((String)Session["LoginAdmin"] == "True")
+            if (id == null || id < 0)
             {
-                return View(db.Directors.ToList());
+                ViewBag.pageDirectors = 0;
             }
             else
             {
-                return RedirectToAction("../Films");
+                ViewBag.pageDirectors = id;
             }
+
+            var directors = db.Directors.OrderBy(d => d.LastName);
+
+            if (TempData["msg"] != null)
+            {
+                ViewBag.msg = TempData["msg"].ToString();
+                ViewBag.msgType = TempData["msgType"].ToString();
+            }
+            return View(directors);
+        }
+
+        public ActionResult Search()
+        {
+
+            List<string> nationalities = db.Directors.Select(f => f.Nationality).ToList();
+            nationalities.Add("");
+            nationalities.Sort();
+            ViewBag.listeNationalities = nationalities.Distinct();
+
+            return View();
+        }
+
+        public JsonResult Resultats(SearchMemberViewModel rech) //effectue le tri en fonction des critères
+        {
+            IQueryable<Director> directors = db.Directors;
+
+            if (!String.IsNullOrWhiteSpace(rech.FirstName))
+            {
+                directors = directors.Where(f => f.FirstName.Contains(rech.FirstName));
+            }
+            if (!String.IsNullOrWhiteSpace(rech.LastName))
+            {
+                directors = directors.Where(f => f.LastName.Contains(rech.LastName));
+            }
+            if (!String.IsNullOrWhiteSpace(rech.AddNaissDate))
+            {
+                var dateNaiss = DateTime.ParseExact(rech.AddNaissDate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                directors = directors.Where(f => f.Birth >= dateNaiss);
+            }
+            if (!String.IsNullOrWhiteSpace(rech.Nationality))
+            {
+                directors = directors.Where(f => f.Nationality == rech.Nationality);
+            }
+
+            return Json(directors.ToList());
         }
 
         // GET: Directors/Details/5
@@ -36,18 +84,13 @@ namespace VideoOnDemand.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Director director = db.Directors.Find(id);
+
             if (director == null)
             {
                 return HttpNotFound();
             }
-            if ((String)Session["LoginAdmin"] == "True")
-            {
                 return View(director);
-            }
-            else
-            {
-                return RedirectToAction("../Films");
-            }
+            
         }
 
         // GET: Directors/Create
@@ -109,10 +152,21 @@ namespace VideoOnDemand.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Nationality,FirstName,LastName,Birth")] Director director)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && (String)Session["LoginAdmin"] == "True")
             {
                 db.Entry(director).State = EntityState.Modified;
                 db.SaveChanges();
+
+                if (Request.Files.Count > 0) //sauvegarde de la jacket si elle a été envoyée
+                {
+                    var jack = Request.Files[0];
+
+                    if (jack != null && jack.ContentLength > 0)
+                    {
+                        var path = Path.Combine(Server.MapPath("~/Content/Images/Directors/"), director.Id + ".jpg");
+                        jack.SaveAs(path);
+                    }
+                }
                 return RedirectToAction("Index");
             }
             return View(director);
