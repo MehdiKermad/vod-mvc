@@ -9,7 +9,14 @@
 
 @Html.ActionLink("patternDetails", "Details", "Films", new { id = "replaceIdFilm" }, new { @id = "patternDetails", @style = "display:none;" })
 
-<h2>Search</h2>
+<div class="btn">
+    @Html.ActionLink("Rechercher un acteur", "Index", "Actors/Search", new { area = "" }, new { @class = "btn btn-link" })
+</div>
+<div class="btn">
+    @Html.ActionLink("Rechercher un réalisateur", "Index", "Directors/Search", new { area = "" }, new { @class = "btn btn-link" })
+</div>
+
+<h2>Recherche</h2>
 
 <div id="formRecherche" class="row">
     <div class="col-lg-6">
@@ -31,13 +38,19 @@
     <div class="col-lg-6">
         <div id="datePicker" class="input-daterange">
             @Html.Label("datePicker", "Date de sortie")
+            <br/>
+            Entre
             <input id="dateInfRecherche" type="text" class="input-small form-control" />
-            <br />
+            <br/>
+            Et
             <input id="dateSupRecherche" type="text" class="input-small form-control" />
         </div>
     </div>
 </div>
-<button id="startRecherche" type="submit" class="btn btn-default btn-primary">Rechercher</button>
+
+<div>
+    <button id="startRecherche" type="submit" class="btn btn-default btn-primary">Rechercher</button>
+</div>
 
 <br /><br />
 

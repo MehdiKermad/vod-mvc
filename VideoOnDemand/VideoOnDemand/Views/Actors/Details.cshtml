@@ -4,38 +4,27 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2>Acteur</h2>
 
 <div>
-    <h4>Actor</h4>
+    <h4>Detail</h4>
     <hr />
     <dl class="dl-horizontal">
+        @if (File.Exists(Server.MapPath("~/Content/Images/Actors/" + Model.Id + ".jpg"))) //on verifie que la jacket existe
+        {
+            <dd>
+                <img src="@Url.Content("~/Content/Images/Actors/" + Model.Id + ".jpg")" style="width:130px; height:200px;" />
+            </dd>
+        }
+        else
+        {
+            <dd>
+                <img src="@Url.Content("~/Content/Images/Jackets/PasDeJacket.jpg")" style="width:130px; height:200px;" />
+            </dd>
+        }
+        
         <dt>
-            @Html.DisplayNameFor(model => model.Nationality)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Nationality)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Biography)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Biography)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.FirstName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FirstName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LastName)
+            Nom
         </dt>
 
         <dd>
@@ -43,7 +32,31 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Birth)
+            Prénom
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+
+        <dt>
+           Nationalité
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nationality)
+        </dd>
+
+        <dt>
+           Biographie
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Biography)
+        </dd>
+
+        <dt>
+            Date de naissance
         </dt>
 
         <dd>
@@ -53,6 +66,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Modifier", "Edit", new { id = Model.Id }, new { @class = "btn btn-info" }) |
+    @Html.ActionLink("Retour", "Index", new { area = "" }, new { @class = "btn btn-info" })
 </p>

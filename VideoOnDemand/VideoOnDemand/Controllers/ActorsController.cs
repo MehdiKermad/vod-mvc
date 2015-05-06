@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using VideoOnDemand.Entity;
 using VideoOnDemand.Models;
+using VideoOnDemand.ModelViews;
 
 namespace VideoOnDemand.Controllers
 {
@@ -16,16 +19,73 @@ namespace VideoOnDemand.Controllers
         private VODContext db = new VODContext();
 
         // GET: Actors
-        public ActionResult Index()
+        public ActionResult Index(int? id)
         {
-            if ((String)Session["LoginAdmin"] == "True")
+            if (id == null || id < 0)
             {
-                return View(db.Actors.ToList());
+                ViewBag.pageActors = 0;
             }
             else
             {
-                return RedirectToAction("Index","Films");
+                ViewBag.pageActors = id;
             }
+
+            var actors = db.Actors.OrderBy(actor => actor.LastName);
+
+            if (TempData["msg"] != null)
+            {
+                ViewBag.msg = TempData["msg"].ToString();
+                ViewBag.msgType = TempData["msgType"].ToString();
+            }
+            return View(actors);
+        }
+
+        public ActionResult ListeActor()
+        {
+            var actors = db.Actors.OrderBy(actor => actor.LastName);
+            actors.Reverse();
+
+            return View(actors);
+        }
+
+        public ActionResult Search()
+        {
+
+            List<string> nationalities = db.Actors.Select(f => f.Nationality).ToList();
+            nationalities.Add("");
+            nationalities.Sort();
+            ViewBag.listeNationalities = nationalities.Distinct();
+            
+            return View();
+        }
+
+        public JsonResult Resultats(SearchMemberViewModel rech) //effectue le tri en fonction des critères
+        {
+            IQueryable<Actor> actors = db.Actors;
+
+            if (!String.IsNullOrWhiteSpace(rech.FirstName))
+            {
+                actors = actors.Where(f => f.FirstName.Contains(rech.FirstName));
+            }
+            if (!String.IsNullOrWhiteSpace(rech.LastName))
+            {
+                actors = actors.Where(f => f.LastName.Contains(rech.LastName));
+            }
+            if (!String.IsNullOrWhiteSpace(rech.AddNaissDate))
+            {
+                var AddNaissDate = DateTime.ParseExact(rech.AddNaissDate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                actors = actors.Where(f => f.Birth >= AddNaissDate);
+            }
+            if (!String.IsNullOrWhiteSpace(rech.Biography))
+            {
+                actors = actors.Where(f => f.Biography == rech.Biography);
+            }
+            if (!String.IsNullOrWhiteSpace(rech.Nationality))
+            {
+                actors = actors.Where(f => f.Nationality == rech.Nationality);
+            }
+
+            return Json(actors.ToList());
         }
 
         // GET: Actors/Details/5
@@ -36,18 +96,14 @@ namespace VideoOnDemand.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Actor actor = db.Actors.Find(id);
+
             if (actor == null)
             {
                 return HttpNotFound();
             }
-            if ((String)Session["LoginAdmin"] == "True")
-            {
-                return View(actor);
-            }
-            else
-            {
-                return RedirectToAction("../Films");
-            }
+            
+            return View(actor);
+       
         }
 
         // GET: Actors/Create
@@ -70,10 +126,21 @@ namespace VideoOnDemand.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Nationality,Biography,FirstName,LastName,Birth")] Actor actor)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && (String)Session["LoginAdmin"] == "True")
             {
                 db.Actors.Add(actor);
                 db.SaveChanges();
+
+                if (Request.Files.Count > 0) //sauvegarde de la jacket si elle a été envoyée
+                {
+                    var jack = Request.Files[0];
+
+                    if (jack != null && jack.ContentLength > 0)
+                    {
+                        var path = Path.Combine(Server.MapPath("~/Content/Images/Actors/"), actor.Id + ".jpg");
+                        jack.SaveAs(path);
+                    }
+                }
                 return RedirectToAction("Index");
             }
 
@@ -109,10 +176,21 @@ namespace VideoOnDemand.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Nationality,Biography,FirstName,LastName,Birth")] Actor actor)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && (String)Session["LoginAdmin"] == "True")
             {
                 db.Entry(actor).State = EntityState.Modified;
                 db.SaveChanges();
+
+                if (Request.Files.Count > 0) //sauvegarde de la jacket si elle a été envoyée
+                {
+                    var jack = Request.Files[0];
+
+                    if (jack != null && jack.ContentLength > 0)
+                    {
+                        var path = Path.Combine(Server.MapPath("~/Content/Images/Actors/"), actor.Id + ".jpg");
+                        jack.SaveAs(path);
+                    }
+                }
                 return RedirectToAction("Index");
             }
             return View(actor);

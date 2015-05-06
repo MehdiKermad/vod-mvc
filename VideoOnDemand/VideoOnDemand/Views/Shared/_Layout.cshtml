@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title - BoxShadow</title>
 
     @System.Web.Optimization.Styles.Render("~/css")
     @System.Web.Optimization.Styles.Render("~/js")
@@ -21,6 +21,8 @@
                     <span class="icon-bar"></span>
                 </button>
                 @Html.ActionLink("Accueil", "Index", "Films", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Acteurs", "Index", "Actors", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Réalisateurs", "Index", "Directors", new { area = "" }, new { @class = "navbar-brand" })
                 @Html.ActionLink("Recherche", "Search", "Films", new { area = "" }, new { @class = "navbar-brand" })
                 @Html.ActionLink("Profil", "Details", "Users", new { area = "", id = Session["LoginUserID"] }, new { @class = "navbar-brand" })              
             </div>
@@ -67,5 +69,6 @@
             <p class="text-center">Mehdi Kermad - Rachid Edjekouane - Mehmet Oktem</p>
         </div>
     </div>
+    
 </body>
 </html>

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -66,7 +68,16 @@ namespace VideoOnDemand.Controllers
             {
                 db.Users.Add(user);
                 db.SaveChanges();
+                if (Request.Files.Count > 0) //sauvegarde de la jacket si elle a été envoyée
+                {
+                    var jack = Request.Files[0];
 
+                    if (jack != null && jack.ContentLength > 0)
+                    {
+                        var path = Path.Combine(Server.MapPath("~/Content/Images/Users/"), user.Id + ".jpg");
+                        jack.SaveAs(path);
+                    }
+                }
                 Login(user); //l'utilisateur est directement connecté après inscription
 
                 return RedirectToAction("Index", "Films");
@@ -104,20 +115,26 @@ namespace VideoOnDemand.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Pseudo,Mdp,Admin,FirstName,LastName,Birth")] User user)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && (String)Session["LoginAdmin"] == "True")
             {
                 db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();
+
+                if (Request.Files.Count > 0) //sauvegarde de la jacket si elle a été envoyée
+                {
+                    var jack = Request.Files[0];
+
+                    if (jack != null && jack.ContentLength > 0)
+                    {
+                        var path = Path.Combine(Server.MapPath("~/Content/Images/Users/"), user.Id + ".jpg");
+                        jack.SaveAs(path);
+                    }
+                }
+
                 return RedirectToAction("Index", "Films");
             }
-            if ((String)Session["LoginAdmin"] == "True" || (String)Session["LoginUserId"] == user.Id.ToString())
-                return View(user);
-            else
-            {
-                TempData["msg"] = "Vous n'êtes pas autorisé à éditer ce profil";
-                TempData["msgType"] = "alert-danger";
-                return RedirectToAction("Index", "Films");
-            }
+
+            return View(user);
         }
 
         // GET: Users/Delete/5

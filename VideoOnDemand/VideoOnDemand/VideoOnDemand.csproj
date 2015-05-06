@@ -206,6 +206,7 @@
     <Compile Include="Models\Film.cs" />
     <Compile Include="Models\Personn.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="ModelViews\SearchMemberViewModel.cs" />
     <Compile Include="ModelViews\SearchViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -247,6 +248,8 @@
     <Content Include="Views\Users\Login.cshtml" />
     <Content Include="Views\Films\ListeFilm.cshtml" />
     <Content Include="Views\Films\Visualisation.cshtml" />
+    <Content Include="Views\Directors\Search.cshtml" />
+    <Content Include="Views\Actors\Search.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
