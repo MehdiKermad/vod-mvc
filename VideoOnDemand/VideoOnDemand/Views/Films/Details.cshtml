@@ -70,6 +70,16 @@
     <div class="form-horizontal">
         <h4>Tous les commentaires</h4>
         <hr />
+        @foreach (var c in ViewBag.commentsList)
+        {
+            for (int cpt = 0; cpt < c.Marks;cpt++ )
+            { 
+                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+            }
+            <p>@c.Message</p>
+            <small>le @c.Date</small>
+            <hr/>
+        }
         <input type="hidden" name="Id_Film" value="@Model.Id" />
         <input type="hidden" name="Id_User" value="1" />
         <div class="form-group">

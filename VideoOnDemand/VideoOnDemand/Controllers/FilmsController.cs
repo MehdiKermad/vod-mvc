@@ -105,9 +105,10 @@ namespace VideoOnDemand.Controllers
 
             Film film = db.Films.Find(id);
 
-            var comment = from c in db.Comments
-                               where c.Film == film
-                               select c;
+            var commentsList = db.Comments.Where(c => c.Film.Id == film.Id).OrderBy(c => c.Date).ToList();
+            commentsList.Reverse();
+
+            ViewBag.commentsList = commentsList;
 
             if (film == null)
             {
