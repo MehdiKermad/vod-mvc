@@ -250,6 +250,7 @@
     <Content Include="Views\Films\Visualisation.cshtml" />
     <Content Include="Views\Directors\Search.cshtml" />
     <Content Include="Views\Actors\Search.cshtml" />
+    <Content Include="Views\Films\Search2.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -6,7 +6,7 @@
 
 <h2>Réalisateur</h2>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Edit", "Directors", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     

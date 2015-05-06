@@ -33,6 +33,7 @@
                 <div id=" datepicker" class="input-daterange">
                     @Html.Label("datePicker", "Date de naissance")
                     <input id="dateNaissRecherche" type="text" class="input-small form-control" />
+                    <input id="biography" type="hidden" class="input-small form-control" />
                 </div>
             </div>
         </div>
@@ -74,9 +75,9 @@
                 data: JSON.stringify({
                     "LastName": $("#nomRecherche").val(),
                     "FirstName": $("#prenomRecherche").val(),
-                    "Biographie": $("#prenomRecherche").val(),
                     "Nationality": $("#listeNationalities").val(),
                     "AddNaissDate": $("#dateNaissRecherche").val(),
+                    "Biography": $("#biography").val(),
                 }),
                 dataType: "json",
                 success: afficheResultats,
@@ -93,7 +94,7 @@
                 .append("<td><a href=" + $("#patternDetails").attr("href").replace("replaceIdActor", val.Id) + ">" + val.LastName + "</a></td>")
                 .append("<td>" + val.FirstName + "</td>")
                 .append("<td>" + val.Nationality + "</td>")
-                .append("<td>" + val.Biographie + "</td>")
+                .append("<td>" + val.Biography + "</td>")
             });
 
             $("#triActors").fadeIn();

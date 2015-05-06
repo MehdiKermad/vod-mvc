@@ -65,6 +65,16 @@ namespace VideoOnDemand.Controllers
             return View();
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Search2([Bind(Include = "Name")] Film film)
+        {
+            var result = db.Films.Where(f=>f.Name.Contains(film.Name));
+            ViewBag.result = result.Distinct();
+
+            return View();
+        }
+
         public JsonResult Resultats(SearchViewModel rech) //effectue le tri en fonction des critères
         {
             IQueryable<Film> films = db.Films;

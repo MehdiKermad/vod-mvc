@@ -40,13 +40,14 @@
                     <form action="@Url.Action("Logout","Users")" method="get" class="navbar-form navbar-right">
                         <button type="submit" class="btn btn-danger">Deconnexion</button>
                     </form>
-                }
-                <form class="nav navbar-form navbar-right" role="search">
+                }@using (Html.BeginForm("Search2", "Films", FormMethod.Post, new { @class="nav navbar-form navbar-right", enctype = "multipart/form-data" }))
+{
+                    @Html.AntiForgeryToken()
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search">
+                        <input type="text" name="Name" class="form-control" placeholder="Search">
                     </div>
                     <button type="submit" class="btn btn-primary">Recherche</button>
-                </form>
+                }
             </div>
         </div>
     </div>
