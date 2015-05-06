@@ -20,15 +20,17 @@ namespace VideoOnDemand.Controllers
         // GET: Users
         public ActionResult Index()
         {
-            if ((String)Session["LoginName"] == "True")
+            if ((String)Session["LoginAdmin"] == "True")
             {
-                return View(db.Users.ToList());
+                var users = db.Users.ToList();
+                return View(users);
             }
             else
             {
                 TempData["msg"] = "Veuillez vous connecter";
                 TempData["msgType"] = "alert-warning";
-                return View("Index", "Films");
+
+                return RedirectToAction("Index", "Films");
             }
 
         }

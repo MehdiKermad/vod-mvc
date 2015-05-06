@@ -65,7 +65,7 @@
 <br />
 <p>
     @Html.ActionLink("Modifier", "Edit", new { id = Model.Id }, new { @class = "btn btn-info" }) |
-    @Html.ActionLink("Retour aux Films", "Index", new { @class = "btn btn-info" })
+    @Html.ActionLink("Retour aux Films", "Index", new { area = "" }, new { @class = "btn btn-info" })
 </p>
 
 <h2>Commentaires</h2>
@@ -98,6 +98,7 @@
         <div class="form-group">
             <div class="col-md-10">
                 <select name="Marks" class="form-control">
+                    <option value="">Mettez une note</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
