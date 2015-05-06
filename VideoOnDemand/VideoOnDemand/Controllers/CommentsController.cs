@@ -18,7 +18,7 @@ namespace VideoOnDemand.Controllers
         // GET: Comments
         public ActionResult Index()
         {
-            return View(db.Comments.ToList());
+            return View(db.Comments.ToList().OrderBy(comment=>comment.Date).Reverse());
         }
 
         // GET: Comments/Details/5
