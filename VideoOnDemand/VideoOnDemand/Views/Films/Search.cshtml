@@ -9,6 +9,13 @@
 
 @Html.ActionLink("patternDetails", "Details", "Films", new { id = "replaceIdFilm" }, new { @id = "patternDetails", @style = "display:none;" })
 
+<div class="btn">
+    @Html.ActionLink("Rechercher un acteur", "Index", "Actors/Search", new { area = "" }, new { @class = "btn btn-link" })
+</div>
+<div class="btn">
+    @Html.ActionLink("Rechercher un réalisateur", "Index", "Directors/Search", new { area = "" }, new { @class = "btn btn-link" })
+</div>
+
 <h2>Recherche</h2>
 
 <div id="formRecherche" class="row">
@@ -40,7 +47,10 @@
         </div>
     </div>
 </div>
-<button id="startRecherche" type="submit" class="btn btn-default btn-primary">Rechercher</button>
+
+<div>
+    <button id="startRecherche" type="submit" class="btn btn-default btn-primary">Rechercher</button>
+</div>
 
 <br /><br />
 
